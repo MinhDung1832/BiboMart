@@ -43,6 +43,7 @@ namespace ProductAllTool.DataAccess
         private static string strConnTHUCTAP = ConfigurationManager.AppSettings.Get("strConnTHUCTAP");
 
         #region Thuc Tap 3
+
         public static List<objCombox> sp_Brand()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -77,6 +78,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static int AR_CreateLyDo(string userid, int id, string LyDo)
         {
             DataSet ds = new DataSet();
@@ -103,7 +105,8 @@ namespace ProductAllTool.DataAccess
                 return 0;
             }
         }
-        public static int sp_lydo_update(string userid,int id, string lydo)
+
+        public static int sp_lydo_update(string userid, int id, string lydo)
         {
             DataSet ds = new DataSet();
             try
@@ -129,6 +132,7 @@ namespace ProductAllTool.DataAccess
                 return 0;
             }
         }
+
         public static int CLV_setTuChoi(string userid, string TenNV)
         {
             DataSet ds = new DataSet();
@@ -154,6 +158,7 @@ namespace ProductAllTool.DataAccess
                 return 0;
             }
         }
+
         public static int CLV_setDaDuyet(string userid, string TenNV)
         {
             DataSet ds = new DataSet();
@@ -179,7 +184,8 @@ namespace ProductAllTool.DataAccess
                 return 0;
             }
         }
-        public static int CLV_AddListNC(string userid, string Ca,string type)
+
+        public static int CLV_AddListNC(string userid, string Ca, string type)
         {
             DataSet ds = new DataSet();
             try
@@ -205,6 +211,7 @@ namespace ProductAllTool.DataAccess
                 return 0;
             }
         }
+
         public static DataTable getLstLyDo(string userid, int ID, string LyDo)
         {
             DataSet ds = new DataSet();
@@ -232,6 +239,7 @@ namespace ProductAllTool.DataAccess
                 return ds.Tables[0];
             }
         }
+
         public static List<objCombox> AR_MaHang()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -266,6 +274,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static List<objCombox> AR_MIEN()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -300,6 +309,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static List<objCombox> AR_CuaHang()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -334,6 +344,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static List<objCombox> AR_Tinh()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -368,6 +379,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static List<objCombox> CLV_Ca()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -402,6 +414,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static List<objCombox> CLV_NoiLam()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -436,6 +449,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static List<objCombox> CLV_CuaHang()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -470,6 +484,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static List<objCombox> CLV_LoaiNghi()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -504,6 +519,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static List<objCombox> CLV_Ca_NoiLam()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -538,6 +554,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static DataTable sp_getList(string userid, string brand, string mahang, string mien)
         {
             DataSet ds = new DataSet();
@@ -566,7 +583,8 @@ namespace ProductAllTool.DataAccess
                 return ds.Tables[0];
             }
         }
-        public static DataTable CLV_GetList(string userid, string TuNgay, string DenNgay, string Ca,string NoiLam)
+
+        public static DataTable CLV_GetList(string userid, string TuNgay, string DenNgay, string Ca, string NoiLam)
         {
             DataSet ds = new DataSet();
             try
@@ -595,7 +613,7 @@ namespace ProductAllTool.DataAccess
                     {
                         cmd.Parameters.Add(new SqlParameter("DenNgay", DateTime.Parse(DenNgay)));
                     }
-                    
+
                     cmd.Parameters.Add(new SqlParameter("Ca", Ca));
                     cmd.Parameters.Add(new SqlParameter("NoiLam", NoiLam));
 
@@ -612,7 +630,8 @@ namespace ProductAllTool.DataAccess
                 return ds.Tables[0];
             }
         }
-        public static DataTable CLV_getListNC2(string userid,string TenCH,string Ca)
+
+        public static DataTable CLV_getListNC2(string userid, string TenCH, string Ca)
         {
             DataSet ds = new DataSet();
             try
@@ -639,7 +658,8 @@ namespace ProductAllTool.DataAccess
                 return ds.Tables[0];
             }
         }
-        public static DataTable CLV_getListDC(string userid,string TuNgay,string DenNgay)
+
+        public static DataTable CLV_getListDC(string userid, string TuNgay, string DenNgay)
         {
             DataSet ds = new DataSet();
             try
@@ -681,7 +701,8 @@ namespace ProductAllTool.DataAccess
                 return ds.Tables[0];
             }
         }
-        public static DataTable CLV_getListDuyetNghi(string userid,string TuNgay,string DenNgay)
+
+        public static DataTable CLV_getListDuyetNghi(string userid, string TuNgay, string DenNgay)
         {
             DataSet ds = new DataSet();
             try
@@ -723,7 +744,8 @@ namespace ProductAllTool.DataAccess
                 return ds.Tables[0];
             }
         }
-        public static DataTable CLV_getListXN1(string userid,string TuNgay,string DenNgay)
+
+        public static DataTable CLV_getListXN1(string userid, string TuNgay, string DenNgay)
         {
             DataSet ds = new DataSet();
             try
@@ -765,6 +787,7 @@ namespace ProductAllTool.DataAccess
                 return ds.Tables[0];
             }
         }
+
         public static DataTable CLV_getListNC1(string userid)
         {
             DataSet ds = new DataSet();
@@ -790,6 +813,7 @@ namespace ProductAllTool.DataAccess
                 return ds.Tables[0];
             }
         }
+
         public static List<CaLV> CLV_getListUser(string userid)
         {
             List<CaLV> it_r = new List<CaLV>();
@@ -799,7 +823,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("CLV_getListUser", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("userid", userid));
@@ -831,6 +854,11 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
+        #endregion Thuc Tap 3
+
+        #region vidu
+
         public static List<objCombox> SP_BBS_HRM_GET_CAPBAC(string Code)
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -865,7 +893,6 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
-
 
         public static List<objCombox> SP_BBS_HRM_GetList_BoPhan(string E_DIVISION_CODE, string E_DEPARTMENT_CODE)
         {
@@ -914,7 +941,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("SP_BBS_HRM_getDepartment", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandTimeout = 3000;
@@ -953,7 +979,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("SP_BBS_HRM_get_list_user", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("DivisionCode", Division_Code));
@@ -994,7 +1019,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("SP_BBS_HRM_get_ListPosition", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandTimeout = 300;
@@ -1034,7 +1058,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("sp_bbs_get_sys_list_company", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandTimeout = 300;
@@ -1061,6 +1084,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static List<balancedScoreInfo> sp_bbs_get_sys_list_Division()
         {
             List<balancedScoreInfo> it_r = new List<balancedScoreInfo>();
@@ -1070,7 +1094,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("sp_bbs_get_sys_list_Division", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandTimeout = 300;
@@ -1098,7 +1121,6 @@ namespace ProductAllTool.DataAccess
             }
         }
 
-
         public static List<objCombox> sp_bbs_get_sys_list_capbac()
         {
             List<objCombox> it_r = new List<objCombox>();
@@ -1108,7 +1130,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("sp_bbs_get_sys_list_capbac", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandTimeout = 300;
@@ -1145,7 +1166,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("sp_getlist_balancedscorecard_SIA", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     var reader = cmd.ExecuteReader();
@@ -1182,7 +1202,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("sp_getlist_balancedscorecard_Khoi", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     var reader = cmd.ExecuteReader();
@@ -1209,6 +1228,7 @@ namespace ProductAllTool.DataAccess
                 }
             }
         }
+
         public static DataTable sp_bbs_get_sys_list_BalancedScoreCard(string nam, string congty, string khoi, string sia)
         {
             DataSet ds = new DataSet();
@@ -1267,6 +1287,7 @@ namespace ProductAllTool.DataAccess
                 return ds.Tables[0];
             }
         }
+
         public static bool sp_BiBoMart_Add_HRM_Job(string userid, string CapBac, string CapBacCode, string PositionCode, string PositionName, string CodeJob, string NameJob, string TanSuatThucHien, string ThoiLuongThucHien, string TotalTime)
         {
             using (var con = new SqlConnection(strCon))
@@ -1274,7 +1295,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("sp_bbs_Add_sys_main_HRM_Job", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("userid", userid));
@@ -1427,7 +1447,6 @@ namespace ProductAllTool.DataAccess
                 con.Open();
                 try
                 {
-
                     SqlCommand cmd = new SqlCommand("SP_BBS_HRM_addDiagram", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("userid", userid));
@@ -1521,10 +1540,7 @@ namespace ProductAllTool.DataAccess
                 return 0;
             }
         }
-        #endregion
 
-        
+        #endregion vidu
     }
 }
-
-

@@ -12,7 +12,6 @@
 
 <style>
 
-
     .filter-option-inner-inner {
         font-size: 12px;
     }
@@ -132,7 +131,6 @@
         font-weight: 600;
     }
 
-
     .bootstrap-select .form-control {
         width: 320px;
         max-width: 320px;
@@ -219,7 +217,6 @@
         <button class="tablinks Tab04" onclick="ActiveTab('Tab04')">Xin nghỉ</button>
         <button class="tablinks Tab05" onclick="ActiveTab('Tab05')">Duyệt</button>
     </div>
-
 </div>
 
 @* Lịch ca *@
@@ -283,8 +280,8 @@
         @Html.Partial("~/Views/GDMobile/Tabs/__NhanCaMobile.cshtml")
     </div>
     <div class="col-md-12" style="text-align:center;width:100%;display:flex">
-        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top:5px;text-align:center;width:50%" onclick="js_approve('1')" class="form-control btn btn-info btn_ver">Xác nhận</a></div>
-        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top: 5px; text-align: center; width: 50%" onclick="js_approve('2')" class="form-control btn btn-info btn_ver">Từ chối</a></div>
+        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top:5px;text-align:center;width:50%" onclick="js_approve('True')" class="form-control btn btn-info btn_ver">Xác nhận</a></div>
+        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top: 5px; text-align: center; width: 50%" onclick="js_approve('False')" class="form-control btn btn-info btn_ver">Từ chối</a></div>
     </div>
 
     <hr />
@@ -480,7 +477,6 @@
         <br />
         <div class="col-md-12">
             <div class="col-md-4 col-xs-4 half_col" style="width:30%">
-
             </div>
             <div class="col-md-4 col-xs-4 half_col" style="margin-bottom:3px;width:20%">
                 <label>Số giờ nghỉ:</label>
@@ -766,12 +762,9 @@
                     <div class="col-md-12" style="text-align:center;width:100%;display:flex">
                         <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top:5px;text-align:center;width:50%" onclick="js_acceptSwitchShift()" class="form-control btn btn-info btn_ver">Xác nhận </a></div>
                         <div class="col-md-6" style="width:50%"> <a data-dismiss="modal" class="col-md-6 form-control btn btn-info btn_ver" style="margin-top:5px;text-align:center;width:50%">Đóng </a></div>
-
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
@@ -1021,13 +1014,13 @@
                     js_Loading(true, 1);
                 },
                 success: function (data) {
-                    if (type == '1' && data == 1) {
+                    if (type == 'True' && data == 1) {
                         jAlert('Xác nhận thành công.', 'Thông báo');
                         js_GetListXacNhan();
                         js_GetListsupportShift();
                         js_Loading(false, 1);
                     }
-                    if (type == '2' && data == 1) {
+                    if (type == 'False' && data == 1) {
                         jAlert('Từ chối thành công.', 'Thông báo');
                         js_GetListXacNhan();
                         js_Loading(false, 1);
@@ -1812,5 +1805,3 @@
         }
     }
 </script>
-
-
