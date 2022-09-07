@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1401
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.Utils.Package", "Lib.Utils.Package\Lib.Utils.Package.csproj", "{A0CC3AB7-162F-491C-AA68-F8D24C4E21CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBMSmart", "BBMSmart\BBMSmart.csproj", "{59AC8FC0-4FF2-4B6B-BF55-B65B5B81FA30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0CC3AB7-162F-491C-AA68-F8D24C4E21CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0CC3AB7-162F-491C-AA68-F8D24C4E21CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0CC3AB7-162F-491C-AA68-F8D24C4E21CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0CC3AB7-162F-491C-AA68-F8D24C4E21CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59AC8FC0-4FF2-4B6B-BF55-B65B5B81FA30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59AC8FC0-4FF2-4B6B-BF55-B65B5B81FA30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59AC8FC0-4FF2-4B6B-BF55-B65B5B81FA30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59AC8FC0-4FF2-4B6B-BF55-B65B5B81FA30}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5407E4FC-4562-4AC0-AD17-01EEEE1041C5}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,335 @@
+﻿@using ProductAllTool.Models.ManageSales;
+@{
+    ViewBag.Title = "Điều chuyển nhân sự cửa hàng";
+    Layout = "~/Views/Shared/_Layout_V2.cshtml";
+}
+
+<div class="AutoFix">
+    <div class="row" id="form_search">
+        <div class="col-md-12">
+            <div class="col-md-1 c1">
+                <label style="">Loại điều chuyển</label><span style="color:red">*</span>
+            </div>
+            <div class="col-md-1 c2" ondblclick="$('#LoaiDieuChuyen').val().trigger('change'); js_GetListDCNSCH();">
+                <select id="LoaiDieuChuyen" class="form-control selectpicker" data-live-search="true" onchange="js_GetListDCNSCH()" >
+                    <option value="">--- Loại điều chuyển ---</option>
+                    <option value="THUA">Thừa</option>
+                    <option value="LUANCHUYEN">Luân chuyển</option>
+                </select>
+            </div>
+
+            <div class="col-md-1 c3">
+                <label>Tỉnh</label>
+            </div>
+            <div class="col-md-1 c4" ondblclick="$('#Province').val('').trigger('change')">
+                <select id="Province" class="form-control selectpicker" data-live-search="true" onchange="js_btnSearchBox()">
+                    <option value="">--- Tỉnh ---</option>
+                    @if (ViewBag.lst_province != null)
+                    {
+                        foreach (objCombox box in (List<objCombox>)ViewBag.lst_province)
+                        {
+                            <option value="@box.Code">@box.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class=" col-md-1 c5">
+                <a href="#" onclick="js_btnSearchBox()" class="form-control btn btn-info"><i class="fa fa-search" aria-hidden="true" style="margin-left: 6px;margin-top: 3px;"></i>Tìm kiếm</a>
+
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <div class="col-md-1 c1"><label> Vị trí </label><span style="color:red">*</span></div>
+            <div class="col-md-1 c2" ondblclick="$('#Postision').val('').trigger('change');">
+                <select id="Postision" class="form-control selectpicker" data-live-search="true" onchange="js_btnSearchBox();" >
+                    <option value="">--- Chọn chức danh ---</option>
+                    @foreach (objCombox box in (List<objCombox>)ViewBag.lst_postision)
+                    {
+                        <option value="@box.Code">@box.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-1 c3">
+                <label>Cửa hàng</label>
+            </div>
+            <div class="col-md-1 c4" ondblclick="$('#Store').val('').trigger('change');">
+                <select id="Store" class="form-control selectpicker" data-live-search="true" onchange="js_btnSearchBox();" >
+                    <option value="">--- Chọn cửa hàng ---</option>
+                    @foreach (objCombox box in (List<objCombox>)ViewBag.lst_store)
+                    {
+                        <option value="@box.Code">@box.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-1 c5">
+                <a onclick="js_GetListDCNSCHDetail();" class="form-control btn btn-info"><i class="fa fa-edit" aria-hidden="true" style="margin-left: 6px;margin-top: 3px;"></i> Chọn CH nhận</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 79px;">
+    <div class="col-12 stretch-card pl-0 pr-0">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="table-responsive" id="div-content">
+                    @Html.Partial("~/Views/HRM/Partial/__DieuChuyenNSCH.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Detail_modal" tabindex="-1" role="dialog" aria-labelledby="shift_detail_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:600px; border-radius:0; ">
+        <div class="modal-content" style="border-radius:0;">
+            <div class="modal-header" style="background:#c4c4c4; color:#4f4f4f;padding: 7px;">
+                <h5 class="modal-title" id="shift_detail_modal_label" style=" font-size:18px;display: contents;">Danh sách cửa hàng nhận</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <input id="MaNV_dc" type="hidden" class="form-control" />
+            </div>
+            <div style="width:100%; padding:15px;">
+                <div class="col-md-12">
+                    <div class="col-12 stretch-card pl-0 pr-0">
+                        <div class="card mb-4">
+                            <div class="table-responsive" id="div-content-detail">
+                                @Html.Partial("~/Views/HRM/Partial/__DieuChuyenNSCHDetail.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin:10px">
+
+                    <div style="text-align: center;">
+                        <a onclick="js_approve()" class="form-control btn btn-info" style="width:120px; margin-top:10px;">
+                            <i class="fas fa-check" aria-hidden="true" style="float:left; margin-left: 6px;margin-top: 3px;"></i>Điều chuyển
+                        </a>
+                        <a data-dismiss="modal" class="form-control btn btn-info" style="width:120px; margin-top:10px;">
+                            <i class="fas fa-times" aria-hidden="true" style="float:left; margin-left: 6px;margin-top: 3px;"></i>Đóng
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#txtHead').html("Điều chuyển nhân sự cửa hàng");
+    });
+
+    function js_btnSearchBox() {
+
+        var LoaiDieuChuyen = $("#LoaiDieuChuyen").val();
+        if (LoaiDieuChuyen.length <= 0) {
+            alert('Bạn vui lòng chọn loại điều chuyển!');
+            $("#Province").val('').selectpicker("refresh");
+            $("#Postision").val('').selectpicker("refresh");
+            $("#Store").val('').selectpicker("refresh");
+            return false;
+        } else {
+            js_GetListDCNSCH();
+        }
+    }
+
+    function js_ReloadTable() {
+        $('#tbl_Item')
+            .DataTable({
+                lengthMenu: [[20, 50, 70, 100, -1], [20, 50, 70, 100, 'All']],
+                "pageLength": -1,
+                fixedHeader: {
+                    headerOffset: 147
+                },
+                columnDefs: [
+                ],
+                "orderClasses": false,
+                "deferRender": true,
+
+                autoWidth: false,
+                bAutoWidth: false,
+                "searching": false,
+                responsive: false,
+                order: []
+            });
+    }
+
+    function js_GetListDCNSCH() {
+
+        var LoaiDieuChuyen = $("#LoaiDieuChuyen").val();
+        var Province = $("#Province").val();
+        var Postision = $("#Postision").val();
+        var Store = $("#Store").val();
+        if (LoaiDieuChuyen.length > 0) {
+            $.ajax({
+                url: '/HRM/GetLstDieuChuyenNSCH',
+                type: 'POST',
+                data: JSON.stringify({ LoaiDieuChuyen: LoaiDieuChuyen, Province: Province, Postision: Postision, Store: Store }),
+                contentType: 'application/json, charset=utf-8',
+                beforeSend: function () {
+                    js_Loading(true, 1);
+                },
+                success: function (data) {
+                    $('#div-content').html(data);
+                    js_ReloadTable();
+                    js_Loading(false, 1);
+                },
+                error: function () {
+                    js_Loading(false, 1);
+                }
+            });
+        }
+    }
+
+    function js_ReloadTableDetail() {
+        $('#tbl_Item_detail')
+            .DataTable({
+                lengthMenu: [[20, 50, 70, 100, -1], [20, 50, 70, 100, 'All']],
+                "pageLength": 10,
+                columnDefs: [],
+                "orderClasses": false,
+                "deferRender": true,
+
+                autoWidth: false,
+                bAutoWidth: false,
+                "searching": false,
+                responsive: false,
+                order: []
+            });
+    }
+
+    function js_GetListDCNSCHDetail() {
+
+        var cboxes = document.getElementsByName('check[]');
+        var LoaiDieuChuyen = "";
+        var i = 0;
+        for (var i = 0; i < cboxes.length; i++) {
+            if (cboxes[i].checked) {
+                LoaiDieuChuyen = cboxes[i].value;
+                $('#MaNV_dc').val($('#MaNVdc' + cboxes[i].id).html());
+                break;
+            }
+        }
+        console.log('1');
+
+        console.log(LoaiDieuChuyen);
+
+        if (LoaiDieuChuyen == '') {
+            alert("Vui lòng chọn ít nhất 1 bản ghi.");
+            return;
+        }
+
+        console.log('2');
+
+        $.ajax({
+            url: '/HRM/GetLstDieuChuyenNSCHDetail',
+            type: 'POST',
+            data: JSON.stringify({ LoaiDieuChuyen: LoaiDieuChuyen }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content-detail').html(data);
+                js_ReloadTableDetail();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+
+        $('#Detail_modal').modal('show');
+
+    }
+
+    function js_approve() {
+       // debugger;
+        var LoaiDieuChuyen = $("#LoaiDieuChuyen").val();
+        var MaNVdc = $('#MaNV_dc').val();
+
+        var cboxes = document.getElementsByName('check1[]');
+        var arrCheckbox = [];
+
+        let TrangThai = false;
+        var k = 0;
+        for (var k = 0; k < cboxes.length; k++) {
+            if (cboxes[k].checked) {
+                try {
+                    if ($('#SLThieu' + cboxes[k].id).val().length <= 0) {
+                        TrangThai = true
+                    }
+                } catch (e) { }
+            }
+        }
+
+        if (TrangThai == true) {
+            alert("Vui lòng nhập số lượng thiếu!");
+            return;
+        }
+
+        var i = 0;
+        for (var i = 0; i < cboxes.length; i++) {
+            if (cboxes[i].checked) {
+                var dc = {};
+                dc.MaNVdc = MaNVdc;
+                dc.MaCHnhan = cboxes[i].value;
+                dc.TenCHnhan = $('#TenCHnhan' + cboxes[i].id).html();
+                dc.ChucDanhnhan = $('#ChucDanhnhan' + cboxes[i].id).val();
+                dc.SLThieu = $('#SLThieu' + cboxes[i].id).val();
+                dc.LoaiDieuChuyen = LoaiDieuChuyen;
+                            
+                console.log(dc);
+                arrCheckbox.push(dc);
+            }
+        }
+        console.log('1');
+
+        console.log(arrCheckbox);
+
+        if (arrCheckbox.length == 0) {
+            alert("Vui lòng chọn ít nhất 1 bản ghi.");
+            return;
+        }
+        console.log('2');
+
+        if (arrCheckbox.length > 0) {
+            $.ajax({
+                url: '/HRM/AddDieuChuyenNSCHDetail',
+                type: 'POST',
+                data: JSON.stringify({ lst: arrCheckbox }),
+                contentType: 'application/json, charset=utf-8',
+                beforeSend: function () {
+                    js_Loading(true, 1);
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        alert("Điều chỉnh thành công");
+                        $('#Detail_modal').modal('hide');
+                        js_GetListDCNSCH();
+                        js_Loading(false, 1);
+                    }
+                },
+                error: function () {
+                    js_Loading(false, 1);
+                }
+
+            });
+        }
+
+    }
+
+
+
+
+</script>
+
+
+

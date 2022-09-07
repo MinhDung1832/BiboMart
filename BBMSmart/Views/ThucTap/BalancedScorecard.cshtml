@@ -1,0 +1,174 @@
+﻿@using ProductAllTool.Models.ManageSales;
+@using ProductAllTool.Common
+@{
+    ViewBag.Title = "Balanced Scorecard";
+    Layout = "~/Views/Shared/_Layout_V2.cshtml";
+}
+<div class="AutoFix">
+    <div id="form_search">
+        <div style="width:90%; margin-left:5%;">
+            <div class="col-md-12">
+                <div class="col-md-1 c1">
+                    <label>Công ty</label>
+                </div>
+                <div class="col-md-1 c2">
+                    <select id="Company" class="form-control selectpicker" data-live-search="true" onchange="js_searchbox();">
+                        <option value="">--- Chọn công ty ---</option>
+                        @foreach (var i in ViewBag.lst_company)
+                        {
+                            <option value="@i.congty">@i.congty</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-1 c3">
+                    <label>SIA </label>
+                </div>
+                <div class="col-md-1 c4">
+                    <select id="sia" class="form-control selectpicker" data-live-search="true" onchange="js_searchbox();">
+                        <option value="">--- Chọn SIA ---</option>
+                        @foreach (var i in ViewBag.lstsia)
+                        {
+                            <option value="@i.Code">@i.Name</option>
+                        }
+                    </select>
+
+                </div>
+
+                <div class=" col-md-1 c5">
+                    <select id="hanhdong" class="form-control" style="max-width:150px">
+                        <option value="">--- Chọn hành động ---</option>
+                        <option value="/HRM/HRMDiagram">Quản trị nhân sự</option>
+                        <option value="/HRM/Khaibaocongviec">Khai báo công việc</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-1 c1">
+                    Năm
+                </div>
+                <div class="col-md-1 c2">
+                    <select id="year" class="form-control selectpicker" data-live-search="true" onchange="js_searchbox()">
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option selected value="2022">2022</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </div>
+                <div class="col-md-1 c3">
+                    <label style="">Khối </label>
+                </div>
+                <div class="col-md-1 c4">
+                    <select id="khoi" class="form-control selectpicker" data-live-search="true" onchange="js_searchbox();">
+                        <option value="">--- Chọn Khối ---</option>
+                        @foreach (var i in ViewBag.lstkhoi)
+                        {
+                            <option value="@i.Code">@i.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1 c5">
+                    <a onclick="js_next();" class="form-control btn btn-info"><i class="fas fa-angle-double-right" aria-hidden="true" style="float:left; margin-left: 6px;margin-top: 3px;"></i> Tiếp </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div style="margin-top: 79px ">
+    <div class="col-12 stretch-card pl-0 pr-0">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="table-responsive" id="div-content">
+                    @Html.Partial("~/Views/HRM/Partial/__BalancedScorecard.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var lstallproduct;
+
+    $(function () {
+        $('#txtHead').html("Balanced Scorecard");
+
+    });
+
+    function js_ReloadTable() {
+        $('#tbl_Item').DataTable({
+            lengthMenu: [[20, 50, 70, 100, -1], [20, 50, 70, 100, 'All']],
+            "pageLength": -1,
+            autoWidth: false,
+            "searching": false,
+            order: [[4, "desc"]], fixedHeader: {
+                headerOffset: 147
+            }
+
+        });
+    }
+
+    function js_searchbox() {
+        js_GetListMain();
+
+    }
+
+
+    function js_GetListMain() {
+
+        //truyen bien tk vào
+        $("#tbl_Item > TBODY").html("");
+        var nam = $("#year option:selected").text();
+        console.log(nam);
+        var congty = $("#Company").val();
+        var khoi = $("#khoi").val();
+        var sia = $("#sia").val();
+
+        var arrkhoi = khoi.split(" - ");
+
+        $.ajax({
+            url: '/HRM/GetListBalancedscorecard',
+            type: 'POST',
+            data: JSON.stringify({
+                nam: nam,
+                congty: congty,
+                khoi: khoi,
+                sia: sia
+            }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content').html(data);
+                js_ReloadTable();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+    function js_next() {
+        var cboxes = document.getElementsByName('cbhd');
+        var hd = "";
+        for (var i = 0; i < cboxes.length; i++) {
+            if (cboxes[i].checked) {
+                hd = cboxes[i].value;
+                break;
+            }
+        }
+        var hanhdong = $('#hanhdong').val();
+        if (hanhdong == '') {
+            jAlert('Bạn chưa chọn hành động');
+            return;
+        }
+        window.location = hanhdong + '?Tenhanhdong=' + hd;
+    }
+
+</script>
+
+
+

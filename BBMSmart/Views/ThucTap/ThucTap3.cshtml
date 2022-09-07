@@ -1,0 +1,376 @@
+﻿@using ProductAllTool.Models.ManageSales;
+@using ProductAllTool.Common
+@{
+    ViewBag.Title = "Chia hàng ngoài AR tự động";
+    Layout = "~/Views/Shared/_Layout_V2.cshtml";
+}
+<style>
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        -webkit-appearance: none;
+        margin: 0px !important;
+    }
+
+    input[type="date"] {
+        width: 110px;
+    }
+
+    #btnpopupexcel {
+        display: none
+    }
+</style>
+<div class="AutoFix">
+    <div class="row" id="form_search">
+        <div class="col-md-12">
+            <div class="col-md-1 c1">
+                <label>NCC </label>
+            </div>
+            <div class="col-md-1 c2" ondblclick="$('#vendor').val('').trigger('change')">
+                <select id="mien" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto()">
+                    <option value="">--- Chọn Miền ---</option>
+                    @if (ViewBag.lst_CongViec != null)
+                    {
+                        foreach (objCombox box in (List<objCombox>)ViewBag.lst_CongViec)
+                        {
+                            <option value="@box.Code">@box.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-1 c3">
+                <label>Miền</label>
+            </div>
+            <div class="col-md-1 c4" ondblclick="$('#mien').val('').trigger('change')">
+                <select id="mien" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto()">
+                    <option value="">--- Chọn Miền ---</option>
+                    @if (ViewBag.lst_Mien != null)
+                    {
+                        foreach (objCombox box in (List<objCombox>) ViewBag.lst_Mien)
+                        {
+                            <option value="@box.Code">@box.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-1 c5">
+                <a href="#" class="form-control btn btn-info" onclick="js_GetListAR_Auto()"><i class="fa fa-search" aria-hidden="true" style="margin-left: 6px;margin-top: 3px;"></i>Tìm kiếm</a>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-1 c1">
+                <label>Brand</label>
+            </div>
+            <div class="col-md-1 c2" ondblclick="$('#brand').val('').trigger('change')">
+                <select id="brand" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto()">
+                    <option value="">--- Chọn Brand ---</option>
+                    @if (ViewBag.lst_brand != null)
+                    {
+                        foreach (objCombox box in (List<objCombox>)ViewBag.lst_brand)
+                        {
+                            <option value="@box.Code">@box.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-1 c3">
+                <label>Tỉnh thành</label>
+            </div>
+            <div class="col-md-1 c4" ondblclick="$('#tinh').val('').trigger('change')">
+                <select id="tinh" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto()">
+                    <option value="">--- Chọn Tỉnh ---</option>
+                    @if (ViewBag.lst_Tinh != null)
+                    {
+                        foreach (objCombox box in (List<objCombox>)ViewBag.lst_Tinh)
+                        {
+                            <option value="@box.Code">@box.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-1 c5">
+                <a href="#" onclick="js_approve()" class="form-control btn btn-info"><i class="fa fa-check" aria-hidden="true" style="margin-left: 6px;margin-top: 3px;"></i>Trình duyệt</a>
+
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-1 c1">
+                <label>Mã hàng</label>
+            </div>
+            <div class="col-md-1 c2" ondblclick="$('#mahang').val('').trigger('change')">
+                <select id="mahang" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto()">
+                    <option value="">--- Chọn Mã hàng ---</option>
+                    @if (ViewBag.lst_MaHang != null)
+                    {
+                        foreach (objCombox box in (List<objCombox>)ViewBag.lst_MaHang)
+                        {
+                            <option value="@box.Code">@box.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-1 c3">
+                <label>Cửa hàng</label>
+            </div>
+            <div class="col-md-1 c4" ondblclick="$('#cuahang').val('').trigger('change')">
+                <select id="cuahang" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto()">
+                    <option value="">--- Chọn Cửa hàng ---</option>
+                    @if (ViewBag.lst_CuaHang != null)
+                    {
+                        foreach (objCombox box in (List<objCombox>)ViewBag.lst_CuaHang)
+                        {
+                            <option value="@box.Code">@box.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-1 c5">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-1 c1">
+                <label>&nbsp;</label>
+            </div>
+            <div class="col-md-1 c2">
+            </div>
+            <div class="col-md-1 c3">
+                <label>Kho chia</label>
+            </div>
+            <div class="col-md-1 c4" ondblclick="$('#khochia').val('').trigger('change')">
+                <select id="khochia" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto()">
+                    <option value="">--- Chọn Kho chia ---</option>
+                   
+                </select>
+            </div>
+
+            <div class="col-md-1 c5">
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 145px">
+    <div class="col-12 stretch-card pl-0 pr-0">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="table-responsive" id="div-content">
+                    @Html.Partial("~/Views/ThucTap/Partial/__ThucTap3.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Detail_modal" tabindex="-1" role="dialog" aria-labelledby="shift_detail_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:600px; border-radius:0; ">
+        <div class="modal-content" style="border-radius:0;">
+            <div class="modal-header" style="background:#c4c4c4; color:#4f4f4f;padding: 7px;">
+                <h5 class="modal-title" id="shift_detail_modal_label" style=" font-size:18px;display: contents;">Lý do</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <input id="LyDo" type="hidden" class="form-control" />
+            </div>
+            <div style="width:100%; padding:15px;">
+                <div class="col-md-12">
+                    <div class="col-12 stretch-card pl-0 pr-0">
+                        <div class="card mb-4">
+                            <div class="table-responsive" id="div-content-detail">
+                                @Html.Partial("~/Views/ThucTap/Partial/__addLyDo.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin:10px">
+
+                    <div style="text-align: center;">
+                        <a onclick="js_approve()" class="form-control btn btn-info" style="width:120px; margin-top:10px;">
+                            <i class="fas fa-check" aria-hidden="true" style="float:left; margin-left: 6px;margin-top: 3px;"></i>Add
+                        </a>
+                        <a data-dismiss="modal" class="form-control btn btn-info" style="width:120px; margin-top:10px;">
+                            <i class="fas fa-times" aria-hidden="true" style="float:left; margin-left: 6px;margin-top: 3px;"></i>Đóng
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#txtHead').html("Chia hàng ngoài AR tự động");
+        js_GetListAR_Auto();
+    });
+    function js_ReloadTable() {
+        $('#tbl_Item')
+            .DataTable({
+                lengthMenu: [[20, 50, 70, 100, -1], [20, 50, 70, 100, 'All']],
+                "pageLength": -1,
+                fixedHeader: {
+                    headerOffset: 147
+                },
+                columnDefs: [
+                ],
+                "orderClasses": false,
+                "deferRender": true,
+
+                autoWidth: false,
+                bAutoWidth: false,
+                "searching": false,
+                responsive: false,
+                order: []
+            });
+    }
+    
+
+    function js_approve() {
+       
+
+        var cboxes = document.getElementsByName('check[]');
+        var arrCheckbox = [];
+
+        var i = 0;
+        for (var i = 0; i < cboxes.length; i++) {
+            if (cboxes[i].checked) {
+                var dc = {};
+                dc.id = cboxes[i].value;
+                /*dc.lydo = $('#LyDo' + cboxes[i].id).html();*/
+                dc.LyDo = $('#lydo' + cboxes[i].id).val();
+
+                console.log(dc);
+                arrCheckbox.push(dc);
+            }
+        }
+        console.log('so1');
+
+        console.log(arrCheckbox);
+
+        if (arrCheckbox.length == 0) {
+            alert("Vui lòng chọn ít nhất 1 bản ghi.");
+            return;
+        }
+        console.log('2');
+
+        if (arrCheckbox.length > 0) {
+            $.ajax({
+                url: '/ThucTap/editLyDo',
+                type: 'POST',
+                data: JSON.stringify({ lst: arrCheckbox }),
+                contentType: 'application/json, charset=utf-8',
+                beforeSend: function () {
+                    js_Loading(true, 1);
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        alert("Điều chỉnh thành công");
+                        $('#Detail_modal').modal('hide');
+                        js_GetListAR_Auto();
+                        js_Loading(false, 1);
+                    }
+                },
+                error: function () {
+                    js_Loading(false, 1);
+                }
+
+            });
+        }
+
+    }
+
+    function js_GetListAR_Auto() {
+
+        var brand = $("#brand").val();
+        var mahang = $("#mahang").val();
+        var mien = $("#mien").val();
+        
+            $.ajax({
+                url: '/ThucTap/sp_getList',
+                type: 'POST',
+                data: JSON.stringify({mahang: mahang, mien: mien,brand: brand}),
+                contentType: 'application/json, charset=utf-8',
+                beforeSend: function () {
+                    js_Loading(true, 1);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#div-content').html(data);
+                    js_ReloadTable();
+                    js_Loading(false, 1);
+                },
+                error: function () {
+                    js_Loading(false, 1);
+                }
+            });
+        
+    }
+    function js_GetListLyDo() {
+
+        var cboxes = document.getElementsByName('check[]');
+        var ID = "";
+        var LyDo = "";
+        var i = 0;
+        for (var i = 0; i < cboxes.length; i++) {
+            if (cboxes[i].checked) {
+                ID = cboxes[i].value;
+                $('#lydo').val($('#lydo' + cboxes[i].id).html());
+                break;
+            }
+        }
+        console.log('1');
+
+        console.log("ID:" + ID);
+        console.log("LyDo:" + LyDo);
+
+        if (ID == '') {
+            alert("Vui lòng chọn ít nhất 1 bản ghi.");
+            return;
+        }
+
+        console.log('2');
+
+        $.ajax({
+            url: '/ThucTap/getLyDo',
+            type: 'POST',
+            data: JSON.stringify({ ID: ID, LyDo: LyDo }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content-detail').html(data);
+                js_ReloadTableDetail();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+
+        $('#Detail_modal').modal('show');
+
+    }
+    function js_ReloadTableDetail() {
+        $('#tbl_Item_detail')
+            .DataTable({
+                lengthMenu: [[20, 50, 70, 100, -1], [20, 50, 70, 100, 'All']],
+                "pageLength": 10,
+                columnDefs: [],
+                "orderClasses": false,
+                "deferRender": true,
+
+                autoWidth: false,
+                bAutoWidth: false,
+                "searching": false,
+                responsive: false,
+                order: []
+            });
+    }
+
+</script>
+
+
+
+

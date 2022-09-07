@@ -1,0 +1,1816 @@
+﻿@using ProductAllTool.Models.ManageSales;
+@using ProductAllTool.Common
+@using System.Data
+@{
+    ViewBag.Title = "Ca làm việc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    serializer.MaxJsonLength = Int32.MaxValue;
+    var jsonItems = serializer.Serialize(ViewBag.list_VatTu);
+}
+
+<style>
+
+
+    .filter-option-inner-inner {
+        font-size: 12px;
+    }
+
+    .btn-info {
+        background-color: #f3f3f3 !important;
+        color: #333;
+        border: 1px solid #d5d5d5;
+    }
+
+    .btn {
+        border-radius: 0px;
+        padding: 4px 12px;
+    }
+
+    #modalDetails .form-control {
+        height: 30px !important;
+        font-size: 12px !important;
+    }
+
+    .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark {
+        left: 6px !important;
+        right: unset !important;
+    }
+
+    .box_kichthuoc input {
+        margin-bottom: 3px;
+    }
+
+    .title_05 h3 {
+        font-size: 19px;
+        text-transform: uppercase;
+        margin-top: 7px;
+        margin-bottom: 1px;
+    }
+
+    .modal-footer {
+        padding: 15px 0px !important;
+    }
+
+    input, select, textarea {
+        max-width: 100% !important;
+    }
+
+    .multiselect {
+        width: 181px;
+        line-height: 13px;
+        border-radius: 0px;
+        background-color: #fff;
+    }
+
+    .form-check-inline {
+        display: inline-block;
+    }
+
+    .box_option_thung {
+        margin-top: 9px;
+    }
+
+    .row_1 {
+        width: 93%;
+        margin: 0 auto;
+    }
+
+    .bootstrap-select.form-control-sm .dropdown-toggle {
+        padding: 5px !important;
+    }
+
+    #tbl_Item_length {
+        bottom: 0px;
+        position: absolute;
+        display: none;
+    }
+
+    #tbl_Item_paginate {
+        float: right;
+    }
+
+    .dropdown-menu {
+        /*left: 0px !important;*/
+        right: 0px !important;
+        margin-top: 0px;
+    }
+
+    table.dataTable tfoot td {
+        padding: 3px 2px 1px 18px !important;
+        border-top: 1px solid #111;
+    }
+
+    #div-content {
+        margin-top: 140px;
+    }
+
+    .box_foot {
+        font-size: 12px;
+    }
+
+    .dropdown-toggle {
+        z-index: unset !important;
+    }
+
+    .btn_ver_m2 {
+        width: 148px !important;
+        background-color: #5f7e98 !important;
+        color: #fff;
+        padding: 5px 5px !important;
+        border: none;
+        font-weight: 600;
+        border-radius: 4px !important;
+    }
+
+    .btn_ver {
+        background-color: #5f7e98 !important;
+        color: #fff;
+        font-size: 12px !important;
+        border: none;
+        font-weight: 600;
+    }
+
+
+    .bootstrap-select .form-control {
+        width: 320px;
+        max-width: 320px;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+        margin: 4px 21px 0;
+    }
+
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        border-top-right-radius: 14px;
+    }
+
+        .tab button {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 7px 0px;
+            transition: 0.3s;
+            font-size: 13px;
+            border-top-right-radius: 14px;
+            width: 19%;
+        }
+
+            .tab button:hover {
+                background-color: #ddd;
+            }
+
+            .tab button.active {
+                background-color: #5f7e98;
+                color: #ffffff;
+                font-weight: 500;
+            }
+
+    .tabcontent {
+        padding: 10px 0px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+
+    .half_cols {
+        width: 50%
+    }
+
+    .txtinfo {
+        font-size: 13px
+    }
+
+    .half_col {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    ._jw-tpk-container {
+        right: 15px;
+        top: 967px;
+    }
+</style>
+<style>
+    input[type='date']:after {
+        color: #aaa;
+        content: attr(placeholder);
+    }
+</style>
+
+<div class="col-md-12 title_05" style="text-align:center">
+    <h3>CA LÀM VIỆC</h3>
+    <label>Ngày @DateTime.Now.ToString("dd/MM/yyyy")</label>
+    <p style="font-size: 12px;"><span style="font-weight: normal; text-align: center">@ViewBag.MaPB - @ViewBag.TenPB</span></p>
+    <input type="hidden" name="store" id="store" value="@ViewBag.StoreId" />
+</div>
+
+<hr />
+<div class="col-md-12">
+    <div class="tab box_loaihinh" id="content_LoaiHinh" style=" height: 35px; width: 100%">
+        <button class="	 active Tab01" onclick="ActiveTab('Tab01')">Lịch ca</button>
+        <button class="tablinks Tab02" onclick="ActiveTab('Tab02')">Nhận ca</button>
+        <button class="tablinks Tab03" onclick="ActiveTab('Tab03')">Đổi ca</button>
+        <button class="tablinks Tab04" onclick="ActiveTab('Tab04')">Xin nghỉ</button>
+        <button class="tablinks Tab05" onclick="ActiveTab('Tab05')">Duyệt</button>
+    </div>
+
+</div>
+
+@* Lịch ca *@
+<div id="LichLamViec" class="tabcontent conten01" style="display:block;height:1000px">
+    <div class="col-md-12" style="width:100%;display:flex;">
+        <div class="col-md-1" style="width:20%;padding:0px">
+            <label>Từ ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;" ondblclick="$('#TuNgay').val('').trigger('change')">
+            <input id="TuNgay" type="date" class="form-control" placeholder="Date" style="width:250px;max-width:100% !important;" onchange="js_GetListCalender();" />
+        </div>
+        <div class="col-md-1" style="width:20%;padding:0 8px">
+            <label>Đến ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;" ondblclick="$('#DenNgay').val('').trigger('change')">
+            <input id="DenNgay" type="date" class="form-control" placeholder="Date" style="width:250px;max-width:100% !important;" onchange="js_GetListCalender();" />
+        </div>
+    </div>
+    <div class="col-md-12" style="width:100%;display:flex;">
+        <div class="col-md-1" style="width:20%;padding:0px">
+            <label>Ca</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0px" ondblclick="$('#Ca').val('').trigger('change')">
+            <select id="Ca" class="form-control selectpicker" data-live-search="true" onchange="js_GetListCalender();">
+                <option value="">ca</option>
+                @if (ViewBag.lst_Ca != null)
+                {
+                    foreach (objCombox box in (List<objCombox>)ViewBag.lst_Ca)
+                    {
+                        <option value="@box.Code">@box.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-1" style="width:20%;padding:0px 10px">
+            <label>Nơi làm</label>
+        </div>
+        <div class="col-md-1" style="width: 30%;padding:0px" ondblclick="$('#NoiLam').val('').trigger('change')">
+            <select id="NoiLam" class="form-control selectpicker" data-live-search="true" onchange="js_GetListCalender();">
+                <option value="">Nơi làm</option>
+                @if (ViewBag.lst_NoiLam != null)
+                {
+                    foreach (objCombox box in (List<objCombox>)ViewBag.lst_NoiLam)
+                    {
+                        <option value="@box.Code">@box.Name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <br />
+
+    <div class="col-md-12" id="div-content-calendershift" style="margin-top:10px">
+        @Html.Partial("~/Views/GDMobile/Tabs/__LichCaMobile.cshtml")
+    </div>
+</div>
+
+@* Nhận ca *@
+<div id="XacNhan" class="tabcontent conten02" style="display:none;height:1000px">
+    <div class="col-md-12" id="div-content" style="margin-top:0px">
+        @Html.Partial("~/Views/GDMobile/Tabs/__NhanCaMobile.cshtml")
+    </div>
+    <div class="col-md-12" style="text-align:center;width:100%;display:flex">
+        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top:5px;text-align:center;width:50%" onclick="js_approve('1')" class="form-control btn btn-info btn_ver">Xác nhận</a></div>
+        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top: 5px; text-align: center; width: 50%" onclick="js_approve('2')" class="form-control btn btn-info btn_ver">Từ chối</a></div>
+    </div>
+
+    <hr />
+    <div class="col-md-12" style="width:100%;display:flex;">
+        <div class="col-md-1" style="width:20%;padding:0px">
+            <label>Cửa hàng</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0px" ondblclick="$('#store_sp').val('').trigger('change')">
+            <select id="store_sp" class="form-control selectpicker" data-live-search="true" onchange="js_GetListsupportShift();">
+                <option value="">Cửa hàng</option>
+                @if (ViewBag.lst_CuaHang != null)
+                {
+                    foreach (objCombox box in (List<objCombox>)ViewBag.lst_CuaHang)
+                    {
+                        <option value="@box.Code">@box.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-1" style="width:20%;padding:0px 10px">
+            <label>Loại ca</label>
+        </div>
+        <div class="col-md-1" style="width: 30%;padding:0px" ondblclick="$('#ca_sp').val('').trigger('change')">
+            <select id="ca_sp" class="form-control selectpicker" data-live-search="true" onchange="js_GetListsupportShift();">
+                <option value="">Chọn ca</option>
+                @if (ViewBag.lst_Ca != null)
+                {
+                    foreach (objCombox box in (List<objCombox>)ViewBag.lst_Ca)
+                    {
+                        <option value="@box.Code">@box.Name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <br />
+
+    <div class="col-md-12" id="div-content-supportshift" style="margin-top:10px">
+        @Html.Partial("~/Views/GDMobile/Tabs/__NhanCaMobile1.cshtml")
+    </div>
+
+    <div class="col-md-12" style="text-align:center;width:100%;display:flex">
+        <div class="col-md-12" style="width:100%"> <a href="#" style="margin-top:5px;text-align:center;width:25%" onclick="js_acceptsuport()" class="form-control btn btn-info btn_ver">Nhận ca</a></div>
+    </div>
+
+    <br />
+    <div class="col-md-12" style="width:100%">
+        <div class="col-md-1" style="width:35%">
+            <label style="font-style:italic;text-decoration: underline;">Quy định</label>
+        </div>
+        <div class="col-md-2" style="width:65%">
+            <ul style="font-size: 12px;font-style: italic;text-decoration: underline;">
+                <li>Quy định không chọn ca hỗ trợ </li>
+                <li>Quy dịnh không chọn ca hỗ trợ </li>
+                <li>Quy định không chọn ca hỗ trợ</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@*  Đổi ca*@
+<div id="DoiCa" class="tabcontent conten03" style="display:none; height:1000px;">
+    <div class="col-md-12" style="width:100%;display:flex;">
+        <div class="col-md-1" style="width:20%;padding:0px">
+            <label>Từ ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;" ondblclick="$('#SwitchfrDate').val('').trigger('change')">
+            <input id="SwitchfrDate" type="date" class="form-control" onchange="js_GetListswitchshift()" placeholder="Date" style="width:250px;max-width:100% !important;" />
+        </div>
+        <div class="col-md-1" style="width:20%;padding:0 10px;">
+            <label>Đến ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;" ondblclick="$('#SwitchtoDate').val('').trigger('change')">
+            <input id="SwitchtoDate" type="date" class="form-control" onchange="js_GetListswitchshift()" placeholder="Date" style="width:250px;max-width:100% !important;" />
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12" id="div-content-switchshift" style="margin-top:0px">
+        @Html.Partial("~/Views/GDMobile/Tabs/__DoiCaMobile.cshtml")
+    </div>
+
+    <br />
+    <div class="col-md-12" style="width:100%">
+        <div class="col-md-2 col-xs-2 half_col" style="width:35%">
+            <label style="font-style:italic;text-decoration: underline;">Quy định</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="width:65%">
+            <ul style="font-size: 12px;font-style: italic;text-decoration: underline;">
+                <li>Quy định không chọn ca hỗ trợ </li>
+                <li>Quy dịnh không chọn ca hỗ trợ </li>
+                <li>Quy định không chọn ca hỗ trợ</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@* Xin nghỉ *@
+<div id="XinNghi" class="tabcontent conten04" style="display:none;height:1500px">
+    <div class="col-md-12" style="width:100%;padding:0px">
+        <div class="col-md-6 col-xs-6 half_cols">
+            <label>Mã NV:&nbsp;</label> <span id="BreakMaNV" class="txtinfo"></span>
+        </div>
+        <div class="col-md-6 col-xs-6 half_cols">
+            <label>Tên NV:&nbsp;</label> <span id="BreakTenNV" class="txtinfo"></span>
+        </div>
+    </div>
+    <div class="col-md-12" style="width:100%;padding:0px">
+        <div class="col-md-6 col-xs-6 half_cols">
+            <label>Chức danh:&nbsp;</label><span id="BreakChucDanh" class="txtinfo"></span>
+        </div>
+        <div class="col-md-6 col-xs-6 half_cols">
+            <label>Bộ phận:&nbsp;</label><span id="BreakBoPhan" class="txtinfo"></span>
+        </div>
+    </div>
+    <div class="col-md-12" style="width:100%;padding:0px">
+        <div class="col-md-6 col-xs-6 half_cols">
+            <label>QL trực tiếp:&nbsp;</label><span id="BreakQLTT" class="txtinfo"></span>
+        </div>
+        <div class="col-md-6 col-xs-6 half_cols">
+            <label>Phòng ban:&nbsp;</label> <span id="BreakPhongBan" class="txtinfo"></span>
+        </div>
+    </div>
+    <hr />
+    <div class="col-md-12" style="width:100%">
+        <h5 style="color:#337ab7">1. Đăng ký ngày nghỉ </h5>
+    </div>
+    <div class="col-md-12" style="margin-top:10px">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%;">
+            <label>Thời gian nghỉ:</label>
+        </div>
+        <div class="col-md-4 col-xs-4 half_col" style="width:35%;">
+            <input id="BreakfrDate" type="date" class="form-control" placeholder="Date" style="width:100%;max-width:100% !important;" />
+        </div>
+        <div class="col-md-4 col-xs-4 half_col" style="width:35%;">
+            <input id="BreaktoDate" type="date" class="form-control" placeholder="Date" style="width:100%;max-width:100% !important;margin-bottom:3px;" onchange="js_totaldateoff();js_changebackdate()" />
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Ngày đi làm lại:</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <input id="BreakbackDate" type="date" class="form-control" placeholder="Date" style="width:450px;max-width:100% !important;padding:0px" />
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Loại:</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <select id="BreakTypeShift" class="form-control selectpicker" onchange="js_showTypechange()">
+                <option value="">--- Loại ca ---</option>
+                <option value="fullshift">Toàn ca</option>
+                <option value="halfshiftfirst">Nửa ca trước</option>
+                <option value="secondhalfshift">Nửa ca sau</option>
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12" id="BreakTotalDateSH" style="display:none">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Tổng ngày nghỉ:</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <input disabled type="text" id="BreakTotalTime" class="form-control" style="width:100%;border:1px solid #ccc;height:30px" value="" />
+        </div>
+    </div>
+    <br />
+    <div id="BreakTotalHourSH" style="display:none">
+        <div class="col-md-12">
+            <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            </div>
+            <div class="col-md-4 col-xs-4 half_col" style="margin-bottom:3px;width:20%">
+                <label>Giờ bắt đầu:</label>
+            </div>
+            <div class="col-md-4 col-xs-4 half_col" style="margin-bottom:3px;width:50%">
+                <input disabled type="text" id="BreakHourStart" class="form-control" style="width:100%" />
+            </div>
+        </div>
+        <br />
+        <div class="col-md-12">
+            <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            </div>
+            <div class="col-md-4 col-xs-4 half_col" style="margin-bottom:3px;width:20%">
+                <label>Giờ kết thúc:</label>
+            </div>
+            <div class="col-md-4 col-xs-4 half_col" style="margin-bottom:3px;width:50%">
+                <input disabled type="text" id="BreakHourEnd" class="form-control" style="width:100%" />
+            </div>
+        </div>
+        <br />
+        <div class="col-md-12">
+            <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+
+            </div>
+            <div class="col-md-4 col-xs-4 half_col" style="margin-bottom:3px;width:20%">
+                <label>Số giờ nghỉ:</label>
+            </div>
+            <div class="col-md-4 col-xs-4 half_col" style="margin-bottom:3px;width:50%">
+                <input disabled type="text" id="BreakNumberHour" class="form-control" style="width:100%" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Loại nghỉ:</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <select id="BreakType" class="form-control selectpicker" data-live-search="true">
+                <option value="">--- Loại nghỉ ---</option>
+                @if (ViewBag.lst_LoaiNghi != null)
+                {
+                    foreach (objCombox box in (List<objCombox>)ViewBag.lst_LoaiNghi)
+                    {
+                        <option value="@box.Code">@box.Name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-md-12" style="display:none">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Người duyệt đầu(*):</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <input disabled type="text" id="BreakAccept1" class="form-control" style="width:100%;border:1px solid #ccc;height:30px" value=" - " />
+        </div>
+    </div>
+    <div class="col-md-12" style="display:none">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Người duyệt cuối(*):</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <input disabled type="text" id="BreakAccept2" class="form-control" style="width:100%;border:1px solid #ccc;height:30px" value=" - " />
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12" style="width:100%">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Lý do nghỉ:</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <textarea id="BreakLyDoNghi" class="form-control" style="width:267px !important; max-width:100% !important; height:60px !important; resize:none;margin-bottom:20px"></textarea>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12" style="text-align: right;width: 100%;display: flex">
+        <div class="col-md-12" style="width:100%"> <a href="#" style="margin-top:5px;text-align:center;width:25%" onclick="js_Breaksave();" class="form-control btn btn-info btn_ver">Gửi duyệt</a></div>
+    </div>
+    <div class="col-md-12" style="width:100%">
+        <h6 style="color:#337ab7">Danh sách ngày nghỉ </h6>
+    </div>
+    <br />
+    <div class="col-md-12" style="width:100%;display:flex;">
+        <div class="col-md-1" style="width:20%;padding:0px">
+            <label>Từ ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+            <input id="TakeABreak_frDate" type="date" class="form-control" onchange="js_GetListTakeAbreak()" placeholder="Date" style="width:250px;max-width:100% !important;" />
+        </div>
+        <div class="col-md-1" style="width:20%;padding:0 10px;">
+            <label>Đến ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+            <input id="TakeABreak_toDate" type="date" class="form-control" onchange="js_GetListTakeAbreak()" placeholder="Date" style="width:250px;max-width:100% !important;" />
+        </div>
+    </div>
+    <div class="col-md-12" id="div-content-takeabreak" style="margin-top:10px">
+        @Html.Partial("~/Views/GDMobile/Tabs/__XinNghiMobile.cshtml")
+    </div>
+
+    <div class="col-md-12" style="width:100%">
+        <h5 style="color:#337ab7">2. Đăng ký IN-OUT</h5>
+    </div>
+    <div class="col-md-12" style="margin-top:10px">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%;">
+            <label>Ngày:</label>
+        </div>
+        <div class="col-md-4 col-xs-4 half_col" style="width:35%;">
+            <input id="RegisterInoutDate" type="date" class="form-control" placeholder="Date" style="width:100%;max-width:100% !important;" onchange="loadCaNoilam()" />
+        </div>
+        <div class="col-md-4 col-xs-4 half_col" style="width:35%;">
+            <input type="text" id="RegisterInoutTime" class="form-control" placeholder="Time" style="width:100%;max-width:100% !important;margin-bottom:3px;height:32px!important" />
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Loại:</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <select id="RegisterInoutType" class="form-control selectpicker" onchange="js_showTypechange()">
+                <option value="">--- Loại ---</option>
+                <option value="E_IN">Vào</option>
+                <option value="E_OUT">Ra</option>
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Ca-nơi làm:</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <select id="RegisterInoutShift_store" class="form-control selectpicker">
+                <option value="">--- Ca nơi làm ---</option>
+                @if (ViewBag.lst_Ca_NoiLam != null)
+                {
+                    foreach (objCombox box in (List<objCombox>)ViewBag.lst_Ca_NoiLam)
+                    {
+                        <option value="@box.Code">@box.Name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Lý do không quẹt thẻ:</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <textarea id="RegisterInoutReason" class="form-control" style="width:267px !important; max-width:100% !important; height:60px !important; resize:none;"></textarea>
+        </div>
+    </div>
+    <div class="col-md-12" style="display:none">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Người duyệt 1:</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <input disabled type="text" id="RegisterInoutAccept1" class="form-control" style="width: 100%; border: 1px solid #ccc; height: 30px" value="" />
+        </div>
+    </div>
+    <div class="col-md-12" style="display:none">
+        <div class="col-md-4 col-xs-4 half_col" style="width:30%">
+            <label>Người duyệt 2:</label>
+        </div>
+        <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;width:70%">
+            <input disabled type="text" id="RegisterInoutAccept2" class="form-control" style="width:100%;border:1px solid #ccc;height:30px" value="" />
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12" style="text-align: right;width: 100%;display: flex">
+        <div class="col-md-12" style="width:100%"> <a href="#" style="margin-top:5px;text-align:center;width:25%" onclick="js_RegisterInOutAdd()" class="form-control btn btn-info btn_ver">Gửi duyệt</a></div>
+    </div>
+    <div class="col-md-12" style="width:100%">
+        <h6 style="color:#337ab7">Danh sách đăng ký In - Out </h6>
+    </div>
+    <br />
+    <div class="col-md-12" style="width:100%;display:flex;">
+        <div class="col-md-1" style="width:20%;padding:0px">
+            <label>Từ ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+            <input id="RegisInOutsreach_frDate" type="date" class="form-control" onchange="js_GetListRegisterInOut()" placeholder="Date" style="width:250px;max-width:100% !important;" />
+        </div>
+        <div class="col-md-1" style="width:20%;padding:0 10px;">
+            <label>Đến ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+            <input id="RegisInOutsreach_toDate" type="date" class="form-control" onchange="js_GetListRegisterInOut()" placeholder="Date" style="width:250px;max-width:100% !important;" />
+        </div>
+    </div>
+    <div class="col-md-12" id="div-content-resgisinout" style="margin-top:10px">
+        @Html.Partial("~/Views/GDMobile/Tabs/__XinNghiMobile1.cshtml")
+    </div>
+</div>
+
+@* Duyệt *@
+<div id="Duyet" class="tabcontent conten05" style="display:none;height:1000px">
+    <div class="col-md-12" style="width:100%">
+        <h6 style="color:#337ab7">1. Duyệt ngày nghỉ </h6>
+    </div>
+    <div class="col-md-12" style="width:100%;display:flex;">
+        <div class="col-md-1" style="width:20%;padding:0px">
+            <label>Từ ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+            <input id="AcceptTakeABreakfrDate" type="date" class="form-control" onchange="js_GetListTakeAbreakAccept()" placeholder="Date" style="width:250px;max-width:100% !important;" />
+        </div>
+        <div class="col-md-1" style="width:20%;padding:0 10px;">
+            <label>Đến ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+            <input id="AcceptTakeABreaktoDate" type="date" class="form-control" onchange="js_GetListTakeAbreakAccept()" placeholder="Date" style="width:250px;max-width:100% !important;" />
+        </div>
+    </div>
+    <div class="col-md-12" style="width:100%;display:flex;">
+        <div class="col-md-1" style="width:20%;padding:0px">
+            <label>Trạng thái</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+            <select id="AcceptTakeABreakStatus" class="form-control selectpicker" onchange="js_GetListTakeAbreakAccept()">
+                <option value="">--- Trạng thái ---</option>
+                <option value="Break">Chờ duyệt</option>
+                <option value="AcceptBreak">Đã duyệt</option>
+                <option value="RejectBreak">Từ chối</option>
+            </select>
+        </div>
+        <div class="col-md-1" style="width:20%;padding:0 10px;">
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+        </div>
+    </div>
+    <div class="col-md-12" id="div-content-takeabreakaccept" style="margin-top:10px">
+        @Html.Partial("~/Views/GDMobile/Tabs/__DuyetMobile.cshtml")
+    </div>
+    <br />
+    <div class="col-md-12" style="text-align:center;width:100%;display:flex">
+        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top:5px;text-align:center;width:50%" onclick="js_acceptTakeABreak('3');" class="form-control btn btn-info btn_ver">Duyệt</a></div>
+        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top:5px;text-align:center;width:50%" onclick="js_acceptTakeABreak('4');" class="form-control btn btn-info btn_ver">Từ chối</a></div>
+    </div>
+
+    <div class="col-md-12" style="width:100%">
+        <h6 style="color:#337ab7">1. Duyệt In - Out </h6>
+    </div>
+    <div class="col-md-12" style="width:100%;display:flex;">
+        <div class="col-md-1" style="width:20%;padding:0px">
+            <label>Từ ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+            <input id="AcceptInOutfrDate" type="date" class="form-control" onchange="js_GetListAcceptInOut()" placeholder="Date" style="width:250px;max-width:100% !important;" />
+        </div>
+        <div class="col-md-1" style="width:20%;padding:0 10px;">
+            <label>Đến ngày</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+            <input id="AcceptInOuttoDate" type="date" class="form-control" onchange="js_GetListAcceptInOut();" placeholder="Date" style="width:250px;max-width:100% !important;" />
+        </div>
+    </div>
+    <div class="col-md-12" style="width:100%;display:flex;">
+        <div class="col-md-1" style="width:20%;padding:0px">
+            <label>Trạng thái</label>
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+            <select id="AcceptInOutStatus" class="form-control selectpicker" onchange="js_GetListAcceptInOut()">
+                <option value="">--- Trạng thái ---</option>
+                <option value="InoutConfirm">Chờ duyệt</option>
+                <option value="InoutAccept">Đã duyệt</option>
+                <option value="InoutReject">Từ chối</option>
+            </select>
+        </div>
+        <div class="col-md-1" style="width:20%;padding:0 10px;">
+        </div>
+        <div class="col-md-1" style="width:30%;padding:0;">
+        </div>
+    </div>
+    <div class="col-md-12" id="div-content-acceptinout" style="margin-top:10px">
+        @Html.Partial("~/Views/GDMobile/Tabs/__DuyetMobile1.cshtml")
+    </div>
+    <br />
+    <div class="col-md-12" style="text-align:center;width:100%;display:flex">
+        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top:5px;text-align:center;width:50%" onclick="js_acceptInOut('3');" class="form-control btn btn-info btn_ver">Duyệt</a></div>
+        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top:5px;text-align:center;width:50%" onclick="js_acceptInOut('4');" class="form-control btn btn-info btn_ver">Từ chối</a></div>
+    </div>
+</div>
+
+<div class="modal fade" id="switchshift_Detail_modal" tabindex="-1" role="dialog" aria-labelledby="shift_detail_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:100%; margin:0 auto; padding:10px; border-radius:0; ">
+        <div class="modal-content" style="border-radius:0;">
+            <div class="modal-header" style="background:#c4c4c4; color:#4f4f4f;padding: 7px;">
+                <h5 class="modal-title" id="shift_detail_modal_label" style="font-size:18px;display: contents;">Chi tiết đổi ca</h5>
+                <input type="hidden" id="switchshiftID1" class="form-control" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div style="width:100%; padding:15px;">
+                <div class="col-12 stretch-card pl-0 pr-0">
+                    <div class="card mb-4">
+                        <div class="table-responsive" id="div-content-switchshiftdetail">
+                            @*@Html.Partial("~/Views/SHIFT/Partial/__SwitchShiftDetail.cshtml")*@
+                        </div>
+                    </div>
+                </div>
+                <div style="margin:10px">
+                    <div class="col-md-12" style="text-align:center;width:100%;display:flex">
+                        <div class="col-md-6" style="width:50%"> <a href="#" style="margin-top:5px;text-align:center;width:50%" onclick="js_acceptSwitchShift()" class="form-control btn btn-info btn_ver">Xác nhận </a></div>
+                        <div class="col-md-6" style="width:50%"> <a data-dismiss="modal" class="col-md-6 form-control btn btn-info btn_ver" style="margin-top:5px;text-align:center;width:50%">Đóng </a></div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+<link href="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet" />
+<script type="text/javascript">
+
+    var timepicker = new TimePicker('RegisterInoutTime', {
+        lang: 'en',
+        theme: 'dark'
+    });
+    timepicker.on('change', function (evt) {
+
+        var value = (evt.hour || '00') + ':' + (evt.minute || '00');
+        evt.element.value = value;
+
+    });
+
+    $(function () {
+        js_GetListCalender();
+
+    });
+
+    function ActiveTab(r) {
+        if (r == "Tab01") {
+
+            $('.conten02').hide();
+            $('.conten03').hide();
+            $('.conten04').hide();
+            $('.conten05').hide();
+            $('.conten01').show();
+
+            $('.Tab02').removeClass("active");
+            $('.Tab03').removeClass("active");
+            $('.Tab04').removeClass("active");
+            $('.Tab05').removeClass("active");
+
+            $('.conten01').removeClass("active");
+            $('.Tab01').addClass("active");
+            js_GetListCalender();
+
+        }
+        else if (r == "Tab02") {
+            $('.conten01').hide();
+            $('.conten03').hide();
+            $('.conten04').hide();
+            $('.conten05').hide();
+            $('.conten02').show();
+
+            $('.Tab01').removeClass("active");
+            $('.Tab03').removeClass("active");
+            $('.Tab04').removeClass("active");
+            $('.Tab05').removeClass("active");
+
+            $('.conten02').removeClass("active");
+            $('.Tab02').addClass("active");
+            js_GetListXacNhan();
+            js_GetListsupportShift();
+
+        }
+        else if (r == "Tab03") {
+            $('.conten01').hide();
+            $('.conten02').hide();
+            $('.conten04').hide();
+            $('.conten05').hide();
+            $('.conten03').show();
+
+            $('.Tab01').removeClass("active");
+            $('.Tab02').removeClass("active");
+            $('.Tab04').removeClass("active");
+            $('.Tab05').removeClass("active");
+
+            $('.conten03').removeClass("active");
+            $('.Tab03').addClass("active");
+            js_GetListswitchshift();
+            js_GetTakeAbreakInfo();
+
+        }
+        else if (r == "Tab04") {
+            $('.conten01').hide();
+            $('.conten02').hide();
+            $('.conten03').hide();
+            $('.conten05').hide();
+            $('.conten04').show();
+
+            $('.Tab01').removeClass("active");
+            $('.Tab02').removeClass("active");
+            $('.Tab03').removeClass("active");
+            $('.Tab05').removeClass("active");
+
+            $('.conten04').removeClass("active");
+            $('.Tab04').addClass("active");
+
+            js_GetListTakeAbreak();
+            js_GetTakeAbreakInfo();
+            js_GetListRegisterInOut();
+
+            // $('html, body').animate({ scrollTop: 0 }, 'slow');
+        }
+
+        else if (r == "Tab05") {
+            $('.conten01').hide();
+            $('.conten02').hide();
+            $('.conten03').hide();
+            $('.conten04').hide();
+            $('.conten05').show();
+
+            $('.Tab01').removeClass("active");
+            $('.Tab02').removeClass("active");
+            $('.Tab03').removeClass("active");
+            $('.Tab04').removeClass("active");
+
+            $('.conten05').removeClass("active");
+            $('.Tab05').addClass("active");
+            js_GetListTakeAbreakAccept();
+            js_GetListAcceptInOut();
+        }
+    }
+
+    //LỊCH LÀM VIỆC
+
+    function js_ReloadTablecalender() {
+        js_calendercheck();
+        $('#tbl_Item_CalenderShift')
+            .DataTable({
+                lengthMenu: [[10, 50, 70, 100, -1], [10, 50, 70, 100]],
+                columnDefs: [],
+                autoWidth: false,
+                "searching": false,
+                order: [0, "asc"],
+                "pageLength": 5
+            });
+    }
+
+    function js_GetListCalender() {
+        window.scrollTo(0, 0);
+        var TuNgay = $('#TuNgay').val();
+        var DenNgay = $('#DenNgay').val();
+        var Ca = $('#Ca').val();
+        var NoiLam = $('#NoiLam').val();
+
+        $.ajax({
+            url: '/GDMobile/CLVGetList',
+            type: 'POST',
+            data: JSON.stringify({ TuNgay: TuNgay, DenNgay: DenNgay, Ca: Ca, NoiLam: NoiLam }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content-calendershift').html(data);
+                js_ReloadTablecalender();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+    function js_calendercheck() {
+        let trs = $("#tbl_Item_CalenderShift tbody tr");
+        trs.each((index, tr) => {
+            let checkshow = String($('#checkshow' + tr.id).val()).trim();
+            if (checkshow == '0') {
+                $('#' + tr.id + ' .calendershow').show();
+                $('.calendershow').addClass('show');
+            }
+            else {
+                $('#' + tr.id + ' .calendershow').hide();
+                $('.calendershow').addClass('hidden');
+            }
+
+        });
+
+    }
+
+    //XÁC NHẬN CA
+    function js_ReloadTable() {
+        $('#tbl_Item_XacNhan')
+            .DataTable({
+                lengthMenu: [[10, 50, 70, 100, -1], [10, 50, 70, 100]],
+                columnDefs: [],
+                autoWidth: false,
+                "searching": false,
+                order: [[1, "desc"]],
+                "pageLength": 5
+            });
+    }
+
+    function js_GetListXacNhan() {
+        window.scrollTo(0, 0);
+        var store = $('#store').val();
+
+        $.ajax({
+            url: '/GDMobile/CLVGetListNC1',
+            type: 'POST',
+            data: JSON.stringify({ store: store }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content').html(data);
+                js_ReloadTable();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+    function js_approve(type) {
+
+        var cboxes = document.getElementsByName('check[]');
+        var arrCheckbox = [];
+
+        var i = 0;
+        for (var i = 0; i < cboxes.length; i++) {
+            if (cboxes[i].checked) {
+                var po = {};
+                po.Ca = cboxes[i].value;
+
+                console.log(po);
+                arrCheckbox.push(po);
+            }
+        }
+        console.log('so1');
+
+        console.log(arrCheckbox);
+
+        if (arrCheckbox.length == 0) {
+            jAlert('Bạn phải ít nhất 1 bản ghi.', 'Thông báo');
+            return;
+        }
+        console.log('2');
+
+        if (arrCheckbox.length > 0) {
+            $.ajax({
+                url: '/GDMobile/AddListNC',
+                type: 'POST',
+                data: JSON.stringify({ lst: arrCheckbox, type: type }),
+                contentType: 'application/json, charset=utf-8',
+                beforeSend: function () {
+                    js_Loading(true, 1);
+                },
+                success: function (data) {
+                    if (type == '1' && data == 1) {
+                        jAlert('Xác nhận thành công.', 'Thông báo');
+                        js_GetListXacNhan();
+                        js_GetListsupportShift();
+                        js_Loading(false, 1);
+                    }
+                    if (type == '2' && data == 1) {
+                        jAlert('Từ chối thành công.', 'Thông báo');
+                        js_GetListXacNhan();
+                        js_Loading(false, 1);
+                    }
+                },
+                error: function () {
+                    js_Loading(false, 1);
+                }
+
+            });
+        }
+    }
+
+    function js_ReloadTableSupportShift() {
+        $('#tbl_Item_SupportShift')
+            .DataTable({
+                lengthMenu: [[10, 50, 70, 100, -1], [10, 50, 70, 100]],
+                columnDefs: [],
+                autoWidth: false,
+                "searching": false,
+                order: [[1, "desc"]],
+                "pageLength": 5
+            });
+    }
+
+    function js_GetListsupportShift() {
+        window.scrollTo(0, 0);
+        var TenCH = $('#store_sp').val();
+        var Ca = $('#ca_sp').val();
+
+        $.ajax({
+            url: '/GDMobile/CLVGetListNC2',
+            type: 'POST',
+            data: JSON.stringify({ TenCH: TenCH, Ca: Ca }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content-supportshift').html(data);
+                js_ReloadTableSupportShift();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+    function js_acceptsuport() {
+        var cboxes = document.getElementsByName('check1[]');
+        var arrCheckbox1 = [];
+
+        let TrangThai = false;
+        var k = 0;
+        for (var k = 0; k < cboxes.length; k++) {
+            if (cboxes[k].checked) {
+                try {
+                    if ($('#Ca' + cboxes[k].id).val().length <= 0) {
+                        TrangThai = true
+                    }
+                } catch (e) { }
+            }
+        }
+
+        if (TrangThai == true) {
+            alert("Vui lòng chọn ca.");
+            return;
+        }
+
+        var i = 0;
+        for (var i = 0; i < cboxes.length; i++) {
+            if (cboxes[i].checked) {
+                var po = {};
+                po.ID = cboxes[i].value;
+                po.Ca = $('#Ca' + cboxes[i].id).val();
+
+                console.log(po);
+                arrCheckbox1.push(po);
+            }
+        }
+        console.log('1');
+
+        console.log(arrCheckbox1);
+
+        if (arrCheckbox1.length == 0) {
+            jAlert('Bạn phải ít nhất 1 bản ghi.', 'Thông báo');
+            return;
+        }
+        console.log('2');
+
+        if (arrCheckbox1.length > 0 && checkshift == 0) {
+            $.ajax({
+                url: '/SHIFT/AddRegisterShiftSuport',
+                type: 'POST',
+                data: JSON.stringify({ lst: arrCheckbox1 }),
+                contentType: 'application/json, charset=utf-8',
+                beforeSend: function () {
+                    js_Loading(true, 1);
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        jAlert('Nhận ca thành công.', 'Thông báo');
+                        js_GetListsupportShift();
+                        js_Loading(false, 1);
+                    }
+
+                },
+                error: function () {
+                    js_Loading(false, 1);
+                }
+
+            });
+        }
+    }
+
+    // ĐỔI CA
+    function js_ReloadTableswitchshift() {
+        $('#tbl_Item_SwitchShift')
+            .DataTable({
+                lengthMenu: [[10, 50, 70, 100, -1], [10, 50, 70, 100]],
+                columnDefs: [],
+                autoWidth: false,
+                "searching": false,
+                order: [[0, "desc"]],
+                "pageLength": 5
+            });
+    }
+
+    function js_GetListswitchshift() {
+        window.scrollTo(0, 0);
+        var store = $('#store').val();
+        var TuNgay = $('#SwitchfrDate').val();
+        var DenNgay = $('#SwitchtoDate').val();
+
+        $.ajax({
+            url: '/GDMobile/CLVGetListDC',
+            type: 'POST',
+            data: JSON.stringify({ store: store, TuNgay: TuNgay, DenNgay: DenNgay }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content-switchshift').html(data);
+                js_ReloadTableswitchshift();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+    function js_ReloadTableswitchshiftdetail() {
+        $('#tbl_Item_SwitchShift_detail')
+            .DataTable({
+                lengthMenu: [[10, 50, 70, 100, -1], [10, 50, 70, 100]],
+                columnDefs: [],
+                autoWidth: false,
+                "searching": false,
+                order: [[0, "desc"]],
+                "pageLength": 10
+            });
+    }
+
+    function js_showpopupSwitchShift(MaCH, Ngays, ID) {
+
+        $('#switchshiftID1').val(ID);
+        $.ajax({
+            url: '/SHIFT/GetListSwitchShiftDetail',
+            type: 'POST',
+            data: JSON.stringify({ store: MaCH, SwitchDate: Ngays }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content-switchshiftdetail').html(data);
+                js_ReloadTableswitchshiftdetail();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+        $('#switchshift_Detail_modal').modal('show');
+    }
+
+    function js_acceptSwitchShift() {
+        var switchshiftID1 = $('#switchshiftID1').val();
+        var cboxes = document.getElementsByName('check5[]');
+        var arrCheckbox5 = [];
+        var i = 0;
+        for (var i = 0; i < cboxes.length; i++) {
+            if (cboxes[i].checked) {
+                var po = {};
+                po.switchshiftID1 = switchshiftID1;
+                po.switchshiftID2 = cboxes[i].value;
+                console.log(po);
+                arrCheckbox5.push(po);
+            }
+        }
+        console.log('1');
+
+        console.log(arrCheckbox5);
+
+        if (arrCheckbox5.length == 0) {
+            jAlert('Bạn phải ít nhất 1 bản ghi.', 'Thông báo');
+            return;
+        }
+        console.log('2');
+
+        if (arrCheckbox5.length > 0) {
+            $.ajax({
+                url: '/SHIFT/AddSwitchShift',
+                type: 'POST',
+                data: JSON.stringify({ lst: arrCheckbox5 }),
+                contentType: 'application/json, charset=utf-8',
+                beforeSend: function () {
+                    js_Loading(true, 1);
+                },
+                success: function (data) {
+
+                    if (data == 1) {
+                        jAlert('Thành công.', 'Thông báo');
+                        $('#switchshift_Detail_modal').modal('hide');
+                        js_GetListswitchshift();
+                        js_Loading(false, 1);
+                    }
+                },
+                error: function () {
+                    js_Loading(false, 1);
+                }
+
+            });
+        }
+    }
+
+    // XIN NGHỈ
+    function js_GetTakeAbreakInfo() {
+        $.ajax({
+            url: '/GDMobile/CLVGetListUser',
+            type: 'POST',
+            data: JSON.stringify({}),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#BreakMaNV').html(data[0].MaNV);
+                $('#BreakTenNV').html(data[0].TenNV);
+                $('#BreakChucDanh').html(data[0].ChucDanh);
+                $('#BreakPhongBan').html(data[0].TenPB);
+                $('#BreakBoPhan').html(data[0].BoPhan);
+                $('#BreakQLTT').html(data[0].TenPB);
+                //$('#BreakAccept1').val(data[0].BreakAccept1);
+                //$('#BreakAccept2').val(data[0].BreakAccept2);
+
+                js_Loading(false, 1);
+
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+    function js_totaldateoff() {
+        //tinh tổng ngày nghỉ
+        //debugger;
+        var BreakfrDate = $("#BreakfrDate").val();
+        var BreaktoDate = $("#BreaktoDate").val();
+        var date1 = new Date(BreakfrDate);
+        var date2 = new Date(BreaktoDate);
+        var frdate = date1.getTime();
+        var todate = date2.getTime();
+
+        var frdateres = frdate.toString().substring(0, 6);
+        var todateres = todate.toString().substring(0, 6);
+        if (todateres < frdateres) {
+            alert("Vui lòng chọn ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu!");
+            $('#BreaktoDate').val('');
+        }
+        else if (todateres == frdateres) {
+            $("#BreakTotalTime").val('1');
+        }
+        else if (todateres > frdateres) {
+            var Difference_In_Time = todate - frdate;
+            var diffDays = Math.ceil(Difference_In_Time / (1000 * 60 * 60 * 24));
+            $("#BreakTotalTime").val(diffDays + 1);
+        }
+
+    }
+
+    function js_showTypechange() {
+
+        var BreakTypeShift = $("#BreakTypeShift").val();
+        if (BreakTypeShift == 'fullshift') {
+            $('#BreakTotalDateSH').show();
+            $('#BreakTotalHourSH').hide();
+            $('#BreakHourStart').val('08:00');
+            $('#BreakHourEnd').val('17:00');
+            $('#BreakNumberHour').val('8');
+        }
+
+        if (BreakTypeShift == 'halfshiftfirst') {
+            $('#BreakTotalDateSH').hide();
+            $('#BreakTotalHourSH').show();
+            $('#BreakHourStart').val('08:00');
+            $('#BreakHourEnd').val('12:00');
+            $('#BreakNumberHour').val('4');
+            $("#BreakTotalTime").val('0.5');
+
+        }
+        if (BreakTypeShift == 'secondhalfshift') {
+            $('#BreakTotalDateSH').hide();
+            $('#BreakTotalHourSH').show();
+            $('#BreakHourStart').val('13:00');
+            $('#BreakHourEnd').val('17:00');
+            $('#BreakNumberHour').val('4');
+            $("#BreakTotalTime").val('0.5');
+
+        }
+    }
+
+    function js_changebackdate() {
+        var date = new Date($("#BreaktoDate").val());
+        var tdate = date.setDate(date.getDate() + 1);
+        var todate = new Date(tdate);
+
+        var thang = todate.getMonth() + 1;
+        var thangNew = "0";
+        if (thang <= 9) {
+            thangNew = "0" + thang;
+        } else {
+            thangNew = thang;
+        }
+
+        var ngay = todate.getDate();
+        var ngayNew = "0";
+        if (ngay <= 9) {
+            ngayNew = "0" + ngay;
+        } else {
+            ngayNew = ngay;
+        }
+        var backdate = todate.getFullYear() + '-' + (thangNew) + '-' + ngayNew;
+        $("#BreakbackDate").val(backdate);
+    }
+
+    function js_Breaksave() {
+        if ($('#BreakfrDate').val() == '' || $('#BreaktoDate').val() == '') {
+            jAlert('Vui lòng chọn thời gian nghỉ.', 'Thông báo');
+            return;
+        }
+        if ($("#BreakbackDate").val() == '') {
+            jAlert('Vui lòng chọn ngày đi làm lại.', 'Thông báo');
+            return;
+        }
+        if ($("#BreakType").val() == '') {
+            jAlert('Vui lòng chọn loại nghỉ.', 'Thông báo');
+            return;
+        }
+        if ($("#BreakTypeShift").val() == '') {
+            jAlert('Vui lòng chọn loại ca.', 'Thông báo');
+            return;
+        }
+
+        var BreakAccept1 = $('#BreakAccept1').val();
+        var arrBreakAccept1 = BreakAccept1.split("-");
+
+        var BreakAccept2 = $('#BreakAccept2').val();
+        var arrBreakAccept2 = BreakAccept2.split("-");
+
+        var pr = {};
+        pr.store = $('#store').val();
+        pr.BreakfrDate = $("#BreakfrDate").val();
+        pr.BreaktoDate = $("#BreaktoDate").val();
+        pr.BreakbackDate = $("#BreakbackDate").val();
+        pr.BreakShiftType = $("#BreakTypeShift").val();
+        pr.BreaktotalDate = $("#BreakTotalTime").val();
+        pr.BreakfrHour = $("#BreakHourStart").val();
+        pr.BreaktoHour = $("#BreakHourEnd").val();
+        pr.BreaktotalHour = $("#BreakNumberHour").val();
+        pr.BreakType = $("#BreakType").val();
+        pr.BreakApprove1 = arrBreakAccept1[0];
+        pr.BreakApprove2 = arrBreakAccept2[0];
+        pr.BreakResonoff = $("#BreakLyDoNghi").val();
+
+        $.ajax({
+            url: '/SHIFT/AddTakeABreak',
+            type: 'POST',
+            data: JSON.stringify({ info: pr }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                if (data) {
+                    jAlert('Đăng ký thành công.', 'Thông báo');
+                    js_clear();
+                    js_GetListTakeAbreak();
+                } else {
+                    jAlert('Có lỗi xảy ra', 'Thông báo');
+                }
+
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+
+    }
+
+    function js_clear() {
+        $("#BreakfrDate").val('');
+        $("#BreaktoDate").val('');
+        $("#BreakbackDate").val('');
+        $("#BreakTypeShift").val('').selectpicker("refresh");
+        $("#BreakTotalTime").val('');
+        $("#BreakType").val('').selectpicker("refresh");
+        $("#BreakLyDoNghi").val('');
+        $('#BreakTotalDateSH').hide();
+        $('#BreakTotalHourSH').hide();
+    }
+
+    function js_ReloadTabletakeabreak() {
+        $('#tbl_Item_TakeABreak')
+            .DataTable({
+                lengthMenu: [[10, 50, 70, 100, -1], [10, 50, 70, 100]],
+                columnDefs: [],
+                autoWidth: false,
+                "searching": false,
+                order: [[2, "desc"]],
+                "pageLength": 5
+            });
+    }
+
+    function js_GetListTakeAbreak() {
+        window.scrollTo(0, 0);
+        var TuNgay = $('#TakeABreak_frDate').val();
+        var DenNgay = $('#TakeABreak_toDate').val();
+
+        $.ajax({
+            url: '/GDMobile/CLVGetListXN1',
+            type: 'POST',
+            data: JSON.stringify({ TuNgay: TuNgay, DenNgay: DenNgay }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content-takeabreak').html(data);
+                js_ReloadTabletakeabreak();
+                $('html, body').animate({ scrollTop: 600 }, 'slow');
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+    function loadCaNoilam() {
+        var date = $('#RegisterInoutDate').val();
+        $("#RegisterInoutShift_store").val('');
+        $('#RegisterInoutShift_store').empty();
+        $('#RegisterInoutShift_store').append('<option value="">--- Ca-Nơi làm --</option>');
+        var rcf = $("#RegisterInoutShift_store").val();
+        $.ajax({
+            type: "POST",
+            url: "/SHIFT/getCaNoilam",
+            data: JSON.stringify({ date: date }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            beforeSend: function () {
+            },
+            success: function (r) {
+                if (r != null) {
+                    for (i in r) {
+                        $('#RegisterInoutShift_store').append('<option value="' + r[i].Code + '">' + r[i].Name + '</option>');
+                    }
+                    $('#RegisterInoutShift_store').selectpicker('refresh');
+                }
+            }, error: function () {
+            }
+        });
+        $("#RegisterInoutShift_store").val(rcf).selectpicker('refresh');
+    }
+
+    function js_clear_inout() {
+        $("#RegisterInoutDate").val('');
+        $("#RegisterInoutTime").val('');
+        $("#RegisterInoutType").val('').selectpicker("refresh");
+        $("#RegisterInoutShift_store").val('').selectpicker("refresh");
+        $("#RegisterInoutReason").val('');
+        $("#RegisterInoutAccept1").val('');
+        $("#RegisterInoutAccept1").val('');
+    }
+
+    function js_RegisterInOutAdd() {
+
+        if ($('#RegisterInoutDate').val() == '' || $("#RegisterInoutTime").val() == '') {
+            jAlert('Vui lòng chọn thời gian.', 'Thông báo');
+            return;
+        }
+        if ($("#RegisterInoutType").val() == '') {
+            jAlert('Vui lòng chọn loại.', 'Thông báo');
+            return;
+        }
+        if ($("#RegisterInoutShift_store").val() == '') {
+            jAlert('Vui lòng chọn ca nơi làm.', 'Thông báo');
+            return;
+        }
+        if ($("#RegisterInoutReason").val() == '') {
+            jAlert('Vui lòng chọn lý do.', 'Thông báo');
+            return;
+        }
+
+        var RegisterInoutShift_store = $('#RegisterInoutShift_store').val();
+        var arrRegisterInoutShift_store = RegisterInoutShift_store.split(" - ");
+
+        var re = {};
+        re.store = $('#store').val();
+        re.RegisterInoutDate = $("#RegisterInoutDate").val();
+        re.RegisterInoutTime = $("#RegisterInoutTime").val();
+        re.RegisterInoutType = $("#RegisterInoutType").val();
+        re.RegisterInoutShift = arrRegisterInoutShift_store[0];
+        re.RegisterInoutStore = arrRegisterInoutShift_store[1];
+        re.RegisterInoutReason = $("#RegisterInoutReason").val();
+        re.RegisterInoutAccept1 = $("#RegisterInoutAccept1").val();
+        re.RegisterInoutAccept2 = $("#RegisterInoutAccept2").val();
+
+        $.ajax({
+            url: '/SHIFT/AddRegisterInout',
+            type: 'POST',
+            data: JSON.stringify({ info: re }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                if (data) {
+                    jAlert('Đăng ký thành công.', 'Thông báo');
+                    js_clear_inout();
+                    js_GetListRegisterInOut();
+                } else {
+                    jAlert('Có lỗi xảy ra', 'Thông báo');
+                }
+
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+
+    }
+
+    function js_ReloadTableRegisterInout() {
+        $('#tbl_Item_RegisterInout')
+            .DataTable({
+                lengthMenu: [[10, 50, 70, 100, -1], [10, 50, 70, 100]],
+                columnDefs: [],
+                autoWidth: false,
+                "searching": false,
+                order: [[0, "desc"]],
+                "pageLength": 5
+            });
+    }
+
+    function js_GetListRegisterInOut() {
+        window.scrollTo(0, 0);
+        var RegisInOutsreach_frDate = $('#RegisInOutsreach_frDate').val();
+        var RegisInOutsreach_toDate = $('#RegisInOutsreach_toDate').val();
+
+        $.ajax({
+            url: '/SHIFT/GetListRegisterInOut',
+            type: 'POST',
+            data: JSON.stringify({ RegisInOutsreach_frDate: RegisInOutsreach_frDate, RegisInOutsreach_toDate: RegisInOutsreach_toDate }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content-resgisinout').html(data);
+                js_ReloadTableRegisterInout();
+                $('html, body').animate({ scrollTop: 850 }, 'slow');
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+    // DUYỆT XIN NGHỈ
+    function js_ReloadTabletakeabreakAccept() {
+        $('#tbl_Item_TakeABreakAccept')
+            .DataTable({
+                lengthMenu: [[10, 50, 70, 100, -1], [10, 50, 70, 100]],
+                columnDefs: [],
+                autoWidth: false,
+                "searching": false,
+                order: [[2, "desc"]],
+                "pageLength": 5
+            });
+    }
+
+    function js_GetListTakeAbreakAccept() {
+        window.scrollTo(0, 0);
+        var TuNgay = $('#AcceptTakeABreakfrDate').val();
+        var DenNgay = $('#AcceptTakeABreaktoDate').val();
+        var AcceptTakeABreakStatus = $('#AcceptTakeABreakStatus').val();
+
+        $.ajax({
+            url: '/GDMobile/CLVGetTableDuyetNghi',
+            type: 'POST',
+            data: JSON.stringify({ TuNgay: TuNgay, DenNgay: DenNgay, AcceptTakeABreakStatus: AcceptTakeABreakStatus }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content-takeabreakaccept').html(data);
+                js_ReloadTabletakeabreakAccept();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+    function js_acceptTakeABreak(type) {
+
+        var cboxes = document.getElementsByName('check4[]');
+        var arrCheckbox4 = [];
+
+        var i = 0;
+        for (var i = 0; i < cboxes.length; i++) {
+            if (cboxes[i].checked) {
+                var po = {};
+                po.TenNV = cboxes[i].value;
+
+                console.log(po);
+                arrCheckbox4.push(po);
+            }
+        }
+        console.log('1');
+
+        console.log(arrCheckbox4);
+
+        if (arrCheckbox4.length == 0) {
+            jAlert('Bạn phải ít nhất 1 bản ghi.', 'Thông báo');
+            return;
+        }
+        console.log('2');
+
+        if (arrCheckbox4.length > 0) {
+            $.ajax({
+                url: '/GDMobile/setDaDuyet',
+                type: 'POST',
+                data: JSON.stringify({ lst: arrCheckbox4, type: type }),
+                contentType: 'application/json, charset=utf-8',
+                beforeSend: function () {
+                    js_Loading(true, 1);
+                },
+                success: function (data) {
+
+                    if (type == '3' && data == 1) {
+                        jAlert('Duyệt thành công.', 'Thông báo');
+                        js_GetListTakeAbreakAccept();
+                        js_Loading(false, 1);
+                    }
+                    if (type == '4' && data == 1) {
+                        jAlert('Từ chối thành công.', 'Thông báo');
+                        js_GetListTakeAbreakAccept();
+                        js_Loading(false, 1);
+                    }
+
+                },
+                error: function () {
+                    js_Loading(false, 1);
+                }
+
+            });
+        }
+    }
+
+    function js_ReloadTableAcceptInOut() {
+        $('#tbl_Item_AcceptInout')
+            .DataTable({
+                lengthMenu: [[10, 50, 70, 100, -1], [10, 50, 70, 100]],
+                columnDefs: [],
+                autoWidth: false,
+                "searching": false,
+                order: [[1, "desc"]],
+                "pageLength": 5
+            });
+    }
+
+    function js_GetListAcceptInOut() {
+        window.scrollTo(0, 0);
+        var AcceptInOutfrDate = $('#AcceptInOutfrDate').val();
+        var AcceptInOuttoDate = $('#AcceptInOuttoDate').val();
+        var AcceptInOutStatus = $('#AcceptInOutStatus').val();
+
+        $.ajax({
+            url: '/SHIFT/GetListAcceptInOut',
+            type: 'POST',
+            data: JSON.stringify({ AcceptInOutfrDate: AcceptInOutfrDate, AcceptInOuttoDate: AcceptInOuttoDate, AcceptInOutStatus: AcceptInOutStatus }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content-acceptinout').html(data);
+                js_ReloadTableAcceptInOut();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+    function js_acceptInOut(type) {
+
+        var cboxes = document.getElementsByName('check5[]');
+        var arrCheckbox5 = [];
+
+        var i = 0;
+        for (var i = 0; i < cboxes.length; i++) {
+            if (cboxes[i].checked) {
+                var po = {};
+                po.ID = cboxes[i].value;
+
+                console.log(po);
+                arrCheckbox5.push(po);
+            }
+        }
+        console.log('1');
+
+        console.log(arrCheckbox5);
+
+        if (arrCheckbox5.length == 0) {
+            jAlert('Bạn phải ít nhất 1 bản ghi.', 'Thông báo');
+            return;
+        }
+        console.log('2');
+
+        if (arrCheckbox5.length > 0) {
+            $.ajax({
+                url: '/SHIFT/AddAcceptInOut',
+                type: 'POST',
+                data: JSON.stringify({ lst: arrCheckbox5, type: type }),
+                contentType: 'application/json, charset=utf-8',
+                beforeSend: function () {
+                    js_Loading(true, 1);
+                },
+                success: function (data) {
+
+                    if (type == '3' && data == 1) {
+                        jAlert('Duyệt thành công.', 'Thông báo');
+                        js_GetListAcceptInOut();
+                        js_Loading(false, 1);
+                    }
+                    if (type == '4' && data == 1) {
+                        jAlert('Từ chối thành công.', 'Thông báo');
+                        js_GetListAcceptInOut();
+                        js_Loading(false, 1);
+                    }
+
+                },
+                error: function () {
+                    js_Loading(false, 1);
+                }
+
+            });
+        }
+    }
+</script>
+
+

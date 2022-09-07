@@ -1,0 +1,344 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Đăng nhập</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @{
+        Layout = null;
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/modernizr")
+    }
+    <link href="/Content/bootstrap.css" rel="stylesheet">
+    <link href="/Content/site.css" rel="stylesheet">
+    <link href="~/Resource/css/site.css" rel="stylesheet" />
+</head>
+<style>
+    input:-internal-autofill-selected {
+        appearance: menulist-button;
+        background-color: #cdd3de !important;
+        background-image: none !important;
+        color: -internal-light-dark(black, white) !important;
+    }
+    .form-control {
+        height: 25px;
+        border-radius: 0px !important;
+    }
+
+    .box_01 {
+        border-left: 7px double #545151;
+        margin-top: 373px;
+        margin-left: 17px;
+    }
+
+        .box_01 p {
+            text-transform: uppercase;
+            font-size: 42px;
+            color: #ffffff;
+            padding-left: 23px;
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+        }
+
+    .box_2 {
+        color: #eae6e6;
+        margin-top: 55px;
+        margin-left: 17px;
+    }
+
+        .box_2 ul li {
+            list-style: none;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .box_2 p {
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .box_2 ul {
+            margin-left: -25px;
+        }
+
+    label {
+        font-weight: normal !important;
+    }
+
+    .button_start {
+        float: right;
+        margin-top: 83px;
+    }
+
+        .button_start a {
+            background-color: #e9e8e7;
+            padding: 15px 44px;
+            color: #969696;
+            font-size: 14px;
+        }
+
+            .button_start a:hover {
+                text-decoration: none;
+            }
+
+    .wrap-login100 {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0px 60px 53px;
+        margin-bottom: 130px;
+    }
+
+        .wrap-login100 h3 {
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: lighter;
+            font-family: 'system-ui';
+            color: #ffffff;
+            font-size: 40px;
+            margin-bottom: 90px;
+        }
+
+    .text_change_pass a {
+        color: #fff;
+        padding: 11px;
+        display: block;
+        font-style: italic;
+        font-size: 13px;
+    }
+
+    #myForm label {
+        color: #ffffff;
+        font-size: 15px;
+    }
+
+    .bt_login {
+        text-align: center;
+    }
+
+        .bt_login input {
+            background-color: #fff0;
+            border: 1px solid #eae6e6;
+            color: #ffffff;
+            padding: 2px;
+            /* padding: 8px 110px;*/
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+    .text_change_pass {
+        text-align: center;
+    }
+</style>
+<style>
+
+    html {
+        height: 100%;
+        box-sizing: border-box;
+        background: linear-gradient(90deg,rgba(1,11,52,0.98) 0%,rgba(0,22,67,0.94) 49%,rgba(0,47,102,0.8) 100%);
+    }
+
+    *,
+    *:before,
+    *:after {
+        box-sizing: inherit;
+    }
+    
+    body {
+        position: relative;
+        min-height: 100%;
+        background-image: url('../../Resource/images/bglogin.png');
+        background-color:transparent; /* Used if the image is unavailable */
+        height: 657px; /* You must set a specified height */
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        /*background-size: cover;*/
+        background-size: contain;
+        font-family: 'system-ui';
+    }
+
+    .ct {
+        margin: 0 auto;
+        padding-top: 20px;
+        width: 94%;
+    }
+
+    .logo img {
+        width: 250px;
+    }
+</style>
+
+<div class="content_home ct">
+    <div class="container">
+        
+        <div class="row">
+            <div class="limiter">
+                <div class="">
+                    <div class="logo" style="text-align: center; margin-top:-40px">
+                        <a href="/Home/Index"><img src="~/Resource/images/Logo.png"  /></a>
+                     
+                    </div>
+                </div>
+                <div class="container-login100">
+                    <div style="width: 100%;
+                                margin: 0 auto;
+                                padding: 0px 60px 53px;
+                                margin-top: 177px;
+                                text-align: center;
+                                text-transform: uppercase;
+                                font-weight: lighter;
+                                font-family: 'rift';
+                                color: #ffffff;
+                                margin-bottom: 0px;">
+                        <h3 style=" font-size: 96px !important;font-weight: 700;
+                                    letter-spacing: -2px;">
+                            BIBO SMART
+                            <div style="font-family: sf-pro-text-regular;
+    height: 15px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 19px;
+    text-align: center;
+    color: #fff;
+    padding-top: 0px;">
+                                VĂN PHÒNG ĐIỆN TỬ
+                            </div>
+                        </h3>
+                    </div>
+                    
+                    <div class="wrap-login100">
+
+                        <form class="login100-form validate-form" method="POST" id="myForm">
+                            @if (Session["err"] != null)
+                            {
+                                <p style="color:red;text-align: center;">@Session["err"].ToString()</p>
+                            }
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group">
+                                <div class="col-md-12" style="width:100%; margin-bottom:3px; ">
+
+                                    <div class="col-md-3" style="width:35%; text-align:right; padding:0px">
+                                        <label for="uid" style="margin-left:10px;margin-right: 15px;">Tài khoản</label>
+                                    </div>
+
+                                    <div class="col-md-5" style="width:30%; text-align: -webkit-center;padding:0px">
+                                        <input class="form-control" type="text" id="uid" name="uid">
+                                        <span class="focus-input100"></span>
+                                    </div>
+                                    <div class="col-md-3"></div>
+
+                                </div>
+                                <div class="col-md-12" style="width:100%">
+
+                                    <div class="col-md-3" style="width:35%; text-align:right;padding:0px">
+                                        <label for="pwd" style="margin-left:10px;margin-right: 15px;">Mật khẩu</label>
+                                    </div>
+
+                                    <div class="col-md-5" style="width:30%;text-align: -webkit-center;;padding:0px" ">
+                                        <input type="password" class="form-control" id="pwd" name="pwd">
+                                        <span class="focus-input100"></span>
+                                    </div>
+                                    <div class="col-md-3">
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12" style="width:100%">
+                                    <div class="col-md-3" style="width:29.16666666667%">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="bt_login" style="width:100%">
+                                            <input style="width:50%" type="submit" class="login100-form-btn" value="Đăng nhập" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="width:100%; margin-top:-5px; ">
+                                <div class="col-md-3" style="width:29.16666666667%">
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="text_change_pass"><a href="#">Quên mật khẩu ?</a></div>
+
+                                </div>
+                            </div>
+
+
+                        </form>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="menu_footer footer">
+    <ul>
+        <li><a href="https://bibomart.com.vn">bibomart.com<span>|</span></a></li>
+        <li><a href="#">Bibo family<span>|</span></a></li>
+        <li><a onclick="opennewtab('https://bibomart.com.vn/maplist/index/index/id/1/')" href="#">Mạng lưới<span>|</span></a></li>
+        <li><a onclick="opennewtab('https://bibomart.com.vn/lien-he-bibomart')" href="#">Câu hỏi thường gặp</a></li>
+
+    </ul>
+</div>
+<style>
+    .menu_footer ul li {
+        list-style: none;
+        float: left;
+        padding-right: 10px;
+    }
+
+        .menu_footer ul li a {
+            color: #eae6e6;
+            font-size: 14px;
+        }
+
+    .menu_footer ul {
+        width: 500px;
+        margin: 0 auto;
+        margin-top: -10px;
+    }
+
+        .menu_footer ul li span {
+            padding-left: 10px;
+        }
+
+    .footer {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 1rem;
+        background-color: transparent;
+        text-align: center;
+    }
+</style>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+<script type="text/javascript">
+    $(function () {
+        window.onload = function () {
+            history.replaceState("", "", "");
+        }
+        if (isMobileDevice()) {
+            location.replace("/Account/LoginMobile")
+        } 
+    });
+    function opennewtab(url) {
+        window.open(url, '_blank');
+    }
+
+    var isMobileDevice = function () {
+        let agent = navigator.userAgent || navigator.vendor || window.opera;
+        return /Mobi|Android|Tablet|iPad|iPhone/i.test(agent);
+    }
+</script>
+

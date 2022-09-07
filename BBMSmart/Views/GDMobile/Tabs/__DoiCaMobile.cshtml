@@ -1,0 +1,52 @@
+﻿@using System.Data
+<div class="table-responsive mt-2">
+
+    <table class="table table-bordered table-sm">
+        <thead class="table-success text-center">
+            <tr>
+                <th>Ngày</th>
+                <th>Nơi làm</th>
+                <th>Ca</th>
+                <th>Vị Trí</th>
+                <th>Đổi ca</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                if (Model != null)
+                {
+                    var dt = Model as DataTable;
+                    if (dt.Rows.Count > 0)
+                    {
+                        var i = 0;
+                        foreach (DataRow item in dt.Rows)
+                        {
+                            <tr id="row_@i">
+                                <td class="text-left" style="width:65px; max-width: 65px;  overflow: hidden;white-space: nowrap" id="ngay_@i">
+                                    @item["Ngay"]
+                                </td>
+                                <td class="text-left" style="width: 100px; max-width: 100px;  overflow: hidden;white-space: nowrap">
+                                    @item["NoiLam"]
+                                </td>
+                                <td class="text-left" style="width: 100px; max-width: 100px;  overflow: hidden;white-space: nowrap">
+                                    @item["Ca"]
+                                </td>
+                                <td class="text-left" style="width: 100px; max-width: 100px;  overflow: hidden;white-space: nowrap">
+                                    @item["TenPB"]
+                                </td>
+                                <td class="text-left" style="width: 40px; max-width: 40px;  overflow: hidden;white-space: nowrap">
+                                    @item["DoiCa"]
+                                </td>
+
+
+                            </tr>
+                            i++;
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+
+</div>

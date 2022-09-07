@@ -1,0 +1,133 @@
+﻿@using ProductAllTool.Models.ManageSales;
+@using ProductAllTool.Common
+@{
+    ViewBag.Title = "Chia hàng ngoài AR tự động";
+    Layout = "~/Views/Shared/_Layout_V2.cshtml";
+}
+<style>
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        -webkit-appearance: none;
+        margin: 0px !important;
+    }
+
+    input[type="date"] {
+        width: 110px;
+    }
+
+    #btnpopupexcel {
+        display: none
+    }
+</style>
+<div class="AutoFix">
+    <div class="row" id="form_search">
+        <div class="col-md-12">
+            <div class="col-md-1 c1">
+                <label>NCC </label>
+            </div>
+            <div class="col-md-1 c2" ondblclick="$('#vendor').val('').trigger('change')">
+               
+            </div>
+            <div class="col-md-1 c3">
+                <label>Miền</label>
+            </div>
+            <div class="col-md-1 c4" ondblclick="$('#mien').val('').trigger('change')">
+                <select id="mien" class="form-control selectpicker" data-live-search="true" onchange="loadTinh(); js_GetListAR_Auto()">
+                    <option value="">--- Chọn Miền ---</option>
+                   
+                </select>
+            </div>
+            <div class="col-md-1 c5">
+                <a href="#" class="form-control btn btn-info" onclick="js_GetListAR_Auto()"><i class="fa fa-search" aria-hidden="true" style="margin-left: 6px;margin-top: 3px;"></i>Tìm kiếm</a>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-1 c1">
+                <label>Brand</label>
+            </div>
+            <div class="col-md-1 c2" ondblclick="$('#brand').val('').trigger('change')">
+                <select id="brand" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto(); loadItem();">
+                    <option value="">--- Chọn Brand ---</option>
+                   
+                </select>
+            </div>
+            <div class="col-md-1 c3">
+                <label>Tỉnh thành</label>
+            </div>
+            <div class="col-md-1 c4" ondblclick="$('#tinh').val('').trigger('change')">
+                <select id="tinh" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto(); loadCuaHang();">
+                    <option value="">--- Chọn Tỉnh ---</option>
+                   
+                </select>
+            </div>
+            <div class="col-md-1 c5">
+                <a href="#" onclick="js_approve()" class="form-control btn btn-info"><i class="fa fa-check" aria-hidden="true" style="margin-left: 6px;margin-top: 3px;"></i>Trình duyệt</a>
+
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-1 c1">
+                <label>Mã hàng</label>
+            </div>
+            <div class="col-md-1 c2" ondblclick="$('#mahang').val('').trigger('change')">
+                <select id="mahang" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto()">
+                    <option value="">--- Chọn Mã hàng ---</option>
+                  
+                </select>
+            </div>
+            <div class="col-md-1 c3">
+                <label>Cửa hàng</label>
+            </div>
+            <div class="col-md-1 c4" ondblclick="$('#cuahang').val('').trigger('change')">
+                <select id="cuahang" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto()">
+                    <option value="">--- Chọn Cửa hàng ---</option>
+                 
+                </select>
+            </div>
+
+            <div class="col-md-1 c5">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-1 c1">
+                <label>&nbsp;</label>
+            </div>
+            <div class="col-md-1 c2">
+            </div>
+            <div class="col-md-1 c3">
+                <label>Kho chia</label>
+            </div>
+            <div class="col-md-1 c4" ondblclick="$('#khochia').val('').trigger('change')">
+                <select id="khochia" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR_Auto()">
+                    <option value="">--- Chọn Kho chia ---</option>
+                   
+                </select>
+            </div>
+
+            <div class="col-md-1 c5">
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 145px">
+    <div class="col-12 stretch-card pl-0 pr-0">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="table-responsive" id="div-content">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#txtHead').html("Chia hàng ngoài AR tự động");
+    });
+
+
+</script>
+
+
+
+

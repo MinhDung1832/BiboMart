@@ -1,0 +1,133 @@
+﻿@using ProductAllTool.Models.ManageSales;
+@using ProductAllTool.Common
+@{
+    ViewBag.Title = "Thuctap 1";
+    Layout = "~/Views/Shared/_Layout_V2.cshtml";
+}
+<style>
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        -webkit-appearance: none;
+        margin: 0px !important;
+    }
+
+    input[type="date"] {
+        width: 110px;
+    }
+
+    #btnpopupexcel {
+        display: none
+    }
+</style>
+<div class="AutoFix">
+    <div class="row" id="form_search">
+            <div class="col-md-12">
+                <div class="col-md-1 c1">
+                    <label>Brand - NCC </label>
+                </div>
+                <div class="col-md-1 c2" ondblclick="$('#vendor').val('').trigger('change')">
+                    <select id="vendor" class="form-control selectpicker" data-live-search="true" onchange="loadItem(); js_GetListAR()">
+                        <option value="">--- Chọn Brand - NCC ---</option>
+                        
+                    </select>
+                </div>
+                <div class="col-md-1 c3">
+                    <label>Miền</label>
+                </div>
+                <div class="col-md-1 c4" ondblclick="$('#mien').val('').trigger('change')">
+                    <select id="mien" class="form-control selectpicker" data-live-search="true" onchange="loadTinh(); js_GetListAR()">
+                        <option value="">--- Chọn Miền ---</option>
+                       
+                    </select>
+                </div>
+                <div class="col-md-1 c5">
+                    <a href="#" class="form-control btn btn-info" onclick="js_GetListAR()"><i class="fa fa-search" aria-hidden="true" style="margin-left: 6px;margin-top: 3px;"></i>Tìm kiếm</a>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-1 c1">
+                    <label>Mã hàng<span class="redtext">*</span></label>
+                </div>
+                <div class="col-md-1 c2" ondblclick="$('#mahang').val('').trigger('change')">
+                    <select id="mahang" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR()">
+                        <option value="">--- Chọn Mã hàng ---</option>
+                      
+                    </select>
+                </div>
+                <div class="col-md-1 c3">
+                    <label>Tỉnh thành</label>
+                </div>
+                <div class="col-md-1 c4" ondblclick="$('#tinh').val('').trigger('change')">
+                   
+                </div>
+                <div class="col-md-1 c5">
+                    <a href="#" onclick="js_save()" class="form-control btn btn-info"><i class="fa fa-check" aria-hidden="true" style="margin-left: 6px;margin-top: 3px;"></i>Post AR</a>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-1 c1">
+                    <label>Trạng thái</label>
+                </div>
+                <div class="col-md-1 c2" ondblclick="$('#trangthai').val('').trigger('change')">
+                    <select id="trangthai" class="form-control selectpicker" data-live-search="true" onchange="js_GetListAR()">
+                        <option value="">Tất cả</option>
+                        <option value="DACAI">Đã cài AR</option>
+                        <option value="CHUACAI">Chưa cài AR</option>
+                    </select>
+                </div>
+                <div class="col-md-1 c3">
+                    <label>Top sales</label>
+                </div>
+                <div class="col-md-1 c4">
+                    <input class="form-control" id="topsale" type="number" onchange="js_GetListAR()" />
+                </div>
+
+                <div class="col-md-1 c5">
+                    <a href="#" onclick="jAlert('Comming soon.')" class="form-control btn btn-info"><i class="fa fa-check" aria-hidden="true" style="margin-left: 6px;margin-top: 3px;"></i>Post ĐC</a>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-1 c1">
+
+                </div>
+                <div class="col-md-1 c2">
+                    <a style="max-width: 280px;text-align: center;" href="~/ManageSales/Index" class="form-control btn btn-info"><i class="fa fa-undo" aria-hidden="true" style="margin-top: 3px;"></i>Quản lý tăng trưởng doanh số &nbsp;&nbsp;&nbsp;&nbsp;</a>
+                </div>
+                <div class="col-md-1 c3">
+
+                </div>
+                <div class="col-md-1 c4">
+                    <a style="max-width: 280px;text-align: center;" href="~/Po2/ChiDinhCaiARAccept" class="form-control btn btn-info"><i class="fa fa-hand-point-right" aria-hidden="true" style="margin-top: 3px;"></i>Duyệt cài AR &nbsp;&nbsp;&nbsp;&nbsp;</a>
+                </div>
+
+                <div class="col-md-1 c5">
+                    <a onclick="js_excel()" class="form-control btn btn-info"><i class="fa fa-file-excel" aria-hidden="true" style="margin-left: 6px;margin-top: 3px;"></i>Excel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  style="margin-top: 145px">
+        <div class="col-12 stretch-card pl-0 pr-0">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="table-responsive" id="div-content">
+                        @Html.Partial("~/Views/Po2/Partial/__ThucTap1.cshtml")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+    $(function () {
+        $('#txtHead').html("Chỉ định cài AR");
+
+    });
+
+ 
+</script>
+
+
+
+

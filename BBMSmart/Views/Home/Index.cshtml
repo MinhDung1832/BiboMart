@@ -1,0 +1,714 @@
+﻿@if (!Request.Browser.IsMobileDevice)
+{
+    {
+        ViewBag.Title = "Trang chủ";
+        Layout = "~/Views/Shared/_Layout_New.cshtml";
+    }
+    <style>
+        select::-ms-expand {
+            display: block;
+        }
+
+        td {
+            background: #fff;
+            vertical-align: top;
+            padding: 8px;
+            border: 8px solid #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .divitem {
+            width: 100%;
+            padding: 0 20px;
+            margin-bottom: 10px;
+            background: #F5F5F5;
+            border-radius: 4px;
+        }
+
+            .divitem:hover, .divitemSS:hover, .divitemBN:hover {
+                background: rgba(255, 152, 0, 0.3);
+            }
+
+        .divitemH {
+            width: 100%;
+            font-family: 'Rift-Bold';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 20px;
+            color: #000000;
+            padding: 10px 0px
+        }
+
+        .divitemC {
+            width: 100%;
+            font-family: 'SF Pro';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 20px;
+            padding: 0 0 10px 0
+        }
+
+        .divitemBT {
+            width: 100%;
+            padding: 0 20px;
+            margin-bottom: 10px;
+            background: #F5F5F5;
+            border-radius: 4px;
+            border-left: 10px solid;
+        }
+
+            .divitemBT:hover {
+                background: rgba(255, 152, 0, 0.3);
+                border-left: 10px solid #FFA92C;
+            }
+
+        .divitemBTHExtra {
+            font-family: 'SF Pro';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 10px;
+            line-height: 16px;
+            /* identical to box height, or 160% */
+            color: #494949;
+            padding: 10px 0 0 0;
+        }
+
+        .divitemBTH {
+            width: 100%;
+            font-family: 'Rift-Bold';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 20px;
+            color: #000000;
+            padding: 0 0 10px 0;
+        }
+
+        .divitemSSHExtra {
+            font-family: 'SF Pro';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 10px;
+            line-height: 16px;
+            /* identical to box height, or 160% */
+            color: #494949;
+            padding: 10px 0 0 0;
+        }
+
+        .divitemSSH {
+            width: 100%;
+            font-family: 'Rift-Bold';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 20px;
+            color: #000000;
+            padding: 0 0 10px 0;
+        }
+
+        .divitemBNH {
+            width: 100%;
+            font-family: 'Rift-Bold';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 20px;
+            color: #000000;
+            padding: 0 0 10px 0;
+        }
+
+        .divitemBTC {
+            width: 100%;
+            font-family: 'SF Pro';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 20px;
+            padding: 0 0 10px 0
+        }
+
+        .ibox-title3 {
+            background: #212121;
+            border: 0.5px solid rgba(0, 0, 0, 0.04);
+            border-radius: 7px;
+            font-family: 'SF Pro';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 20px;
+            /* or 154% */
+            display: flex;
+            align-items: center;
+            text-align: center;
+            letter-spacing: -0.08px;
+            color: #FFFFFF;
+            padding: 6px 50px;
+            margin-left: 25px;
+        }
+
+        .ibox-title2 {
+            font-family: 'SF Pro';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 20px;
+            /* or 154% */
+            display: flex;
+            align-items: center;
+            text-align: center;
+            letter-spacing: -0.08px;
+            /* Label Color/Light/Primary */
+            color: #000000;
+        }
+
+        .divitemSS {
+            display: flex;
+            justify-content: space-between;
+            background: #F5F5F5;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .divitemBN {
+            display: flex;
+            justify-content: space-between;
+            background: #F5F5F5;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .divitemSSS {
+            font-family: 'SF Pro';
+            font-style: normal;
+            font-weight: 590;
+            font-size: 24px;
+            line-height: 29px;
+            /* identical to box height */
+            color: #212121;
+            margin-top: 12px;
+            margin-right: 12px;
+        }
+
+        .divitemBNS {
+            font-family: 'Rift';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 32px;
+            /* identical to box height, or 213% */
+            text-align: right;
+            color: #33691E;
+            margin-top: 12px;
+            margin-right: 12px;
+        }
+    </style>
+    <div class="content-wrapper">
+        <div class="page-content fade-in-up">
+            <table style="width:100%">
+                <tr>
+                    <td colspan="2" style="width:70%">
+                        <div class="ibox">
+                            <div class="ibox-body">
+                                <div class="Mbody">
+                                    <div class="ibox-head">
+                                        <div class="ibox-title">GIÁ TRỊ CỐT LÕI</div>
+                                    </div>
+                                    <div class="Mconten" style=" height: 290px;">
+                                        <div class="MSologan 01 active" onmousemove="ShowTile('01')">
+                                            <div class="form-group row">
+                                                <div class="col-sm-4 MNumber">01</div>
+                                                <div class="col-sm-8 Mimages">
+                                                    <img src="/Resource/images/004-positive.png">
+                                                </div>
+                                                <div class="col-sm-12 Mtext">TÍCH CỰC</div>
+                                            </div>
+                                        </div>
+                                        <div class="MSologan 02" onmousemove="ShowTile('02')">
+                                            <div class="form-group row">
+                                                <div class="col-sm-4 MNumber">02</div>
+                                                <div class="col-sm-8 Mimages">
+                                                    <img src="/Resource/images/002-united.png">
+                                                </div>
+                                                <div class="col-sm-12 Mtext">INTEGRITY</div>
+                                            </div>
+                                        </div>
+                                        <div class="MSologan 03" onmousemove="ShowTile('03')">
+                                            <div class="form-group row">
+                                                <div class="col-sm-4 MNumber">03</div>
+                                                <div class="col-sm-8 Mimages">
+                                                    <img src="/Resource/images/003-professional.png">
+                                                </div>
+                                                <div class="col-sm-12 Mtext">CHUYÊN NGHIỆP</div>
+                                            </div>
+                                        </div>
+                                        <div class="MSologan 04" onmousemove="ShowTile('04')">
+                                            <div class="form-group row">
+                                                <div class="col-sm-4 MNumber">04</div>
+                                                <div class="col-sm-8 Mimages">
+                                                    <img src="/Resource/images/001-responsibility.png">
+                                                </div>
+                                                <div class="col-sm-12 Mtext">TRÁCH NHIỆM</div>
+                                            </div>
+                                        </div>
+                                        <div class="MSologan 05" onmousemove="ShowTile('05')">
+                                            <div class="form-group row">
+                                                <div class="col-sm-4 MNumber">05</div>
+                                                <div class="col-sm-8 Mimages">
+                                                    <img src="/Resource/images/006-creativity.png">
+                                                </div>
+                                                <div class="col-sm-12 Mtext">SÁNG TẠO</div>
+                                            </div>
+                                        </div>
+
+                                     
+                                        <div style="height:20px;"></div>
+                                        <div class="col-md-12">
+                                            <div class="activeslo"><p>"TÂM THẾ LUÔN SẴN SÀNG"<br>"NHIỆT HUYẾT VÀ TRUYỀN CẢM HỨNG"</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td rowspan="3">
+                        <div class="ibox">
+                            <div class="ibox-body">
+                                <div class="Mbody">
+                                    <div class="ibox-head">
+                                        <div class="ibox-title">Bản tin Bibosmart</div>
+                                    </div>
+                                    <div class="Mconten" style="padding: 0 20px 20px 20px;" id="Bantin">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr style="width:100%;">
+                    <td style="width:35%;">
+                        <div class="ibox">
+                            <div class="ibox-body">
+                                <div class="Mbody">
+                                    <div class="ibox-head">
+                                        <div class="ibox-title">Mô tả công việc</div>
+                                    </div>
+                                    <div class="Mconten" style="padding: 0 20px 20px 20px;" id="MotaCV">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </td>
+
+                    <td>
+                        <div class="ibox">
+                            <div class="ibox-body">
+                                <div class="Mbody">
+                                    <div class="ibox-head">
+                                        <div class="ibox-title">Siêu sao</div>
+                                        <div class="ibox-title2">
+                                            Doanh thu
+                                            <div class="ibox-title3">KPI</div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="Mconten" style="padding: 0 20px 20px 20px;">
+                                        <div class="divitemSS">
+                                            <div class="divitemSSA">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding: 0; width:70px;border:none;background: transparent;"><img src="https://i.upanh.org/2022/07/08/0-02-06-24011858316cc4c40fd4c5266818d8ee32d980eb0b3913067a7a4eb35495cffa_9b27fe25336b5bd3.jpg" width="56px" height="56px" /></td>
+                                                        <td style="padding: 0;border:none;background: transparent;">
+                                                            <div class="divitemSSA1" style="display:inline">
+                                                                <div class="divitemSSHExtra"> B13886</div>
+                                                                <div class="divitemSSH"> NGUYỄN THỊ HÀ TRANG</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                                
+                                                
+
+                                            </div>
+                                            <div class="divitemSSS">
+                                                9.8
+                                            </div>
+                                        </div>
+                                        <div class="divitemSS">
+                                            <div class="divitemSSA">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding: 0; width:70px;border:none;background: transparent;"><img src="https://i.upanh.org/2022/07/08/0-02-06-cfa6abe627eb7d3744b1d9d0cab1a7bdd6d72a2531b7d404d157d570d04fb3f2_b4549ab1152b7674.jpg" width="56px" height="56px" /></td>
+                                                        <td style="padding: 0;border:none;background: transparent;">
+                                                            <div class="divitemSSA1" style="display:inline">
+                                                                <div class="divitemSSHExtra"> B01193</div>
+                                                                <div class="divitemSSH">VŨ THỊ KIM TRUNG</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </div>
+                                            <div class="divitemSSS">
+                                                9.7
+                                            </div>
+                                        </div>
+                                        <div class="divitemSS">
+                                            <div class="divitemSSA">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding: 0; width:70px;border:none;background: transparent;"><img src="https://i.upanh.org/2022/07/08/0-02-06-b7e70c033b8209700e595923dd3ac91871a89d30c4349dbd1aabce0626f77f75_8414b4572fa3240d.jpg" width="56px" height="56px" /></td>
+                                                        <td style="padding: 0;border:none;background: transparent;">
+                                                            <div class="divitemSSA1" style="display:inline">
+                                                                <div class="divitemSSHExtra">B12189</div>
+                                                                <div class="divitemSSH"> NGUYỄN THỊ HOA</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </div>
+                                            <div class="divitemSSS">
+                                                9.6
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr style="width:100%;">
+                    <td>
+                        <div class="ibox">
+                            <div class="ibox-body">
+                                <div class="Mbody">
+                                    <div class="ibox-head">
+                                        <div class="ibox-title">Dashboard</div>
+                                        <div class="form-group">
+
+                                            <select style="font-family: 'SF Pro Text';
+                                                                            font-style: normal;
+                                                                            font-weight: 500;
+                                                                            font-size: 12px !important;
+                                                                            line-height: 18px;
+                                                                            display: flex;
+                                                                            align-items: center;
+                                                                            letter-spacing: -0.08px;
+                                                                            color: #212121;
+                                                                            border: 1px solid;
+                                                                            border-radius: 6px;
+                                                                            padding: 7px 2px;">
+                                                <option value="">Tháng 5</option>
+                                                <option value="">Tháng 6</option>
+                                                <option value="">Tháng 7</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="Mconten" style="padding: 0 20px 20px 20px;">
+
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td style="padding: 0; width:100px;border:none;background: transparent;">
+                                                    <div style="font-family: 'SF Pro';
+font-style: normal;
+font-weight: 590;
+font-size: 36px;
+line-height: 43px;
+/* identical to box height */
+
+
+color: #212121;">8.0<span style="font-size:16px">point</span></div>
+                                                    <div style="        background: rgba(255, 152, 0, 0.3);
+        font-family: 'SF Pro';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+        /* identical to box height, or 117% */
+        display: flex;
+        align-items: center;
+        color: #E08600;
+        border-radius: 4px;
+        width: 60px;
+        padding: 4px 10px;">+ 12%</div>
+                                                </td>
+                                                <td style="padding: 0;border:none;background: transparent;">
+                                                    <div class="divitemSSA1" style="display:inline">
+
+
+                                                        <div class="ibox-body">
+                                                            <div id="morris_area_chart" style="height:200px"></div>
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ibox">
+                            <div class="ibox-body">
+                                <div class="Mbody">
+                                    <div class="ibox-head">
+                                        <div class="ibox-title">Bonus</div>
+                                    </div>
+                                    <div class="Mconten" style="padding: 0 20px 20px 20px;">
+
+                                        <div class="divitemBN">
+                                            <div class="divitemBNA">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding: 0; width:70px;border:none;background: transparent;"><img src="~/Resource/images/Rectangle 256.svg" width="56px" height="56px" /></td>
+                                                        <td style="padding: 0;border:none;background: transparent;vertical-align:middle">
+                                                            <div class="divitemBNH">
+
+                                                                THƯỞNG DOANH THU
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </div>
+                                            <div class="divitemBNS">
+                                                +50.000 VNĐ
+                                            </div>
+                                        </div>
+                                        <div class="divitemBN">
+                                            <div class="divitemBNA">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding: 0; width:70px;border:none;background: transparent;"><img src="~/Resource/images/Rectangle 259.svg" width="56px" height="56px" /></td>
+                                                        <td style="padding: 0;border:none;background: transparent;vertical-align:middle">
+                                                            <div class="divitemBNH">
+
+                                                                THƯỞNG KPI
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </div>
+                                            <div class="divitemBNS">
+                                                +50.000 VNĐ
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+        Morris.Area({
+            element: 'morris_area_chart',
+            data: [{ period: '2020 Q1', bim: 2666 },
+            { period: '2020 Q2', bim: 2778 },
+            { period: '2020 Q3', bim: 4912 },
+            { period: '2020 Q4', bim: 3767 },
+            { period: '2021 Q1', bim: 6810 },
+            { period: '2021 Q2', bim: 5670 },
+            { period: '2021 Q3', bim: 4820 },
+            { period: '2021 Q4', bim: 15073 },
+            { period: '2022 Q1', bim: 10687 },
+            { period: '2022 Q2', bim: 8432 }],
+            xkey: 'period',
+            ykeys: ['bim'],
+            labels: ['bỉm'],
+            pointSize: 2,
+            hideHover: 'auto',
+            resize: true,
+            lineColors: ['#ffc56d'],
+            lineWidth: 2,
+            pointSize: 1,
+        });
+            js_getMotaCV();
+            js_getBantin();
+        });
+
+        function ShowTile(s) {
+            $(".activeslo").html('');
+            $(".MSologan").removeClass("active");
+            if (s == '01') {
+                $(".activeslo").html('<p>"TÂM THẾ LUÔN SẴN SÀNG"<br />"NHIỆT HUYẾT VÀ TRUYỀN CẢM HỨNG"</p>');
+                $(".MSologan.01").addClass("active");
+            }
+            if (s == '02') {
+                $(".activeslo").html('<p>"TÔI NÓI LÀ TÔI LÀM ĐƯỢC"</p>');
+                $(".MSologan.02").addClass("active");
+            }
+            if (s == '03') {
+                $(".activeslo").html('<p>"CAM KẾT TUÂN THỦ VÀ KỶ LUẬT"<br />"LÀ ĐẠI SỨ THƯƠNG HIỆU"</p>');
+                $(".MSologan.03").addClass("active");
+            }
+            if (s == '04') {
+                $(".activeslo").html('<p>"ĐỨNG TRƯỚC MỖI VẤN ĐỀ HÃY XEM MÌNH LÀ NGUYÊN NHÂN THAY VÌ GIẢI THÍCH BIỆN MINH HÃY ĐƯA RA GIẢI PHÁP"</p>');
+                $(".MSologan.04").addClass("active");
+            }
+            if (s == '05') {
+                $(".activeslo").html('<p>"LẮNG NGHE VÀ HỌC HỎI KHÔNG NGỪNG"<br />"LUÔN NỖ LỰC TÌM KIẾM GIẢI PHÁP TỐT HƠN"</p>');
+                $(".MSologan.05").addClass("active");
+            }
+        }
+
+        function js_getMotaCV() {
+          
+        $.ajax({
+            type: "POST",
+            url: "/Account/getMotaCV",
+            data: JSON.stringify({}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                $('#MotaCV').empty();
+                var str = '';
+                $.each(r, (index, value) => {
+
+                    var tr = ` 
+                                <div class="divitem">
+                                            <div class="divitemH">
+                                                `+ value.Title +`
+                                            </div>
+                                            <div class="divitemC">
+                                                `+ value.Detail +`
+                                            </div>
+                                        </div>`;
+                    str += tr;
+                });
+                $("#MotaCV").append(str);
+            }
+            });
+        }
+
+        function js_getMotaCV() {
+
+            $.ajax({
+                type: "POST",
+                url: "/Account/getMotaCV",
+                data: JSON.stringify({}),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    $('#MotaCV').empty();
+                    var str = '';
+                    $.each(r, (index, value) => {
+
+                        var tr = ` 
+                                <div class="divitem">
+                                            <div class="divitemH">
+                                                `+ value.Title + `
+                                            </div>
+                                            <div class="divitemC">
+                                                `+ value.Detail + `
+                                            </div>
+                                        </div>`;
+                        str += tr;
+                    });
+                    $("#MotaCV").append(str);
+                }
+            });
+        }
+
+        function js_getBantin() {
+
+            $.ajax({
+                type: "POST",
+                url: "/Account/getBantin",
+                data: JSON.stringify({}),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    $('#Bantin').empty();
+                    var str = '';
+                    $.each(r, (index, value) => {
+
+                        var tr = 
+                            `<div class="divitemBT" onclick="opennewtab('`+value.Link+`')">
+                            <div class="divitemBTHExtra">
+                                `+ value.Creator + `
+                                                            </div>
+                            <div class="divitemBTH">
+                                `+ value.Title + `
+                                                            </div>
+                            <div class="divitemBTC">
+                                `+ value.Detail + `
+                                                            </div>
+                        </div>`;
+                        str += tr;
+                    });
+                    $("#Bantin").append(str);
+                }
+            });
+        }
+
+        function opennewtab(url) {
+            window.open(url, '_blank');
+        }
+        
+
+
+
+
+
+
+
+    </script>
+}
+else
+{
+    {
+        ViewBag.Title = "Trang chủ";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <style>
+        .wp_home {
+        }
+
+        .ct {
+            margin: 0 auto;
+            padding-top: 0px;
+            width: 100%;
+        }
+
+        .container {
+            padding: 56px 0px 0px 0px !important;
+            width: 100%;
+            margin-left: 0px;
+        }
+    </style>
+    <div class="content_home ct">
+        <div class="wp_home" style="text-align: center; vertical-align:middle; height:100%">
+            <img src="~/Image/imghome.png" width="100%" />
+        </div>
+    </div>
+}

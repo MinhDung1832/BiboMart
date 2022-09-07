@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet" />
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row col-md-12">
+            <h3>CA LÀM VIỆC</h3>
+            <p>Ngày @DateTime.Now.ToShortDateString()</p>
+            <p>VP - Văn phòng</p>
+        </div>
+        <hr />
+        <div class="row col-sm-12">
+            <!-- Tabs navs -->
+            <ul class="nav nav-tabs mb-3" id="ex-with-icons" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="ex-with-icons-tab-1" data-mdb-toggle="tab"
+                        href="#ex-with-icons-tabs-1" role="tab" aria-controls="ex-with-icons-tabs-1"
+                        aria-selected="true"><i class="fas fa-chart-pie fa-fw me-2"></i>Lịch ca</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="ex-with-icons-tab-2" data-mdb-toggle="tab" href="#ex-with-icons-tabs-2"
+                        role="tab" aria-controls="ex-with-icons-tabs-2" aria-selected="false"><i
+                            class="fas fa-chart-line fa-fw me-2"></i>Nhận ca</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="ex-with-icons-tab-3" data-mdb-toggle="tab" href="#ex-with-icons-tabs-3"
+                        role="tab" aria-controls="ex-with-icons-tabs-3" aria-selected="false"><i
+                            class="fas fa-cogs fa-fw me-2"></i>Đổi ca</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="ex-with-icons-tab-4" data-mdb-toggle="tab" href="#ex-with-icons-tabs-4"
+                        role="tab" aria-controls="ex-with-icons-tabs-4" aria-selected="false"><i
+                            class="fas fa-cogs fa-fw me-2"></i>Xin nghỉ</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="ex-with-icons-tab-5" data-mdb-toggle="tab" href="#ex-with-icons-tabs-5"
+                        role="tab" aria-controls="ex-with-icons-tabs-5" aria-selected="false"><i
+                            class="fas fa-cogs fa-fw me-2"></i>Duyệt</a>
+                </li>
+            </ul>
+            <!-- Tabs navs -->
+            <!-- Tabs content -->
+            <div class="tab-content" id="ex-with-icons-content">
+                <div class="tab-pane fade show active" id="ex-with-icons-tabs-1" role="tabpanel"
+                    aria-labelledby="ex-with-icons-tab-1">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">Từ ngày</div>
+                                <div class="col-sm-12 col-md-9"><input type="date" name="" id="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">Từ ngày</div>
+                                <div class="col-sm-12 col-md-9"><input type="date" name="" id="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">Ca</div>
+                                <div class="col-sm-12 col-md-9">
+                                    <select name="" class="form-select " id="">
+                                        <option value="">1</option>
+                                        <option value="">2</option>
+                                        <option value="">3</option>
+                                        <option value="">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">Làm việc</div>
+                                <div class="col-sm-12 col-md-9">
+                                    <select name="" class="form-select " id="">
+                                        <option value="">1</option>
+                                        <option value="">2</option>
+                                        <option value="">3</option>
+                                        <option value="">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-2">
+
+                        <table class="table table-bordered table-sm">
+                            <thead class="table-success text-center">
+                                <tr>
+                                    <th>Ngày</th>
+                                    <th>Nhân viên</th>
+                                    <th>Nơi làm</th>
+                                    <th>Ca</th>
+                                    <th>Vị Trí</th>
+                                </tr>
+                            </thead>
+                            <tr class="table-info">
+                                <td>Long</td>
+                                <td>Hoang</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                            </tr>
+
+                            <tr class="table-active">
+                                <td>Lan</td>
+                                <td>Le</td>
+                                <td>lanle@fe.edu.vn</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+
+                            <tr class="table-info">
+                                <td>Huong</td>
+                                <td>Nguyen</td>
+                                <td>huongnguyen@fe.edu.vn</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="ex-with-icons-tabs-2" role="tabpanel"
+                    aria-labelledby="ex-with-icons-tab-2">
+
+                    <div class="table-responsive mt-2">
+
+                        <table class="table table-bordered table-sm">
+                            <thead class="table-success text-center">
+                                <tr>
+                                    <th>Loại ca</th>
+                                    <th>Ngày</th>
+                                    <th>Ca</th>
+                                    <th>Nơi làm</th>
+                                    <th>Vị Trí</th>
+                                    <th>Nhận ca</th>
+                                </tr>
+                            </thead>
+                            <tr class="table-info">
+                                <td>Long</td>
+                                <td>Hoang</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                            </tr>
+
+                            <tr class="table-active">
+                                <td>Lan</td>
+                                <td>Le</td>
+                                <td>lanle@fe.edu.vn</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+
+                            <tr class="table-info">
+                                <td>Huong</td>
+                                <td>Nguyen</td>
+                                <td>huongnguyen@fe.edu.vn</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 col-md-2"></div>
+                        <div class="col-sm-12 col-md-4 text-center">
+                            <button type="button" class="btn btn-primary ">Xác nhận</button>
+                        </div>
+                        <div class="col-sm-12 col-md-4 text-center">
+                            <button type="button" class="btn btn-primary">Từ chối</button>
+                        </div>
+                        <div class="col-sm-12 col-md-2"></div>
+                    </div>
+                    <hr>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">Cửa hàng</div>
+                                <div class="col-sm-12 col-md-9">
+                                    <select name="" class="form-select " id="">
+                                        <option value="">1</option>
+                                        <option value="">2</option>
+                                        <option value="">3</option>
+                                        <option value="">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">Loại ca</div>
+                                <div class="col-sm-12 col-md-9">
+                                    <select name="" class="form-select " id="">
+                                        <option value="">1</option>
+                                        <option value="">2</option>
+                                        <option value="">3</option>
+                                        <option value="">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-2">
+
+                        <table class="table table-bordered table-sm">
+                            <thead class="table-success text-center">
+                                <tr>
+                                    <th>Loại ca</th>
+                                    <th>Ngày</th>
+                                    <th>Ca</th>
+                                    <th>Nơi làm</th>
+                                    <th>Vị Trí</th>
+                                    <th>Nhận ca</th>
+                                </tr>
+                            </thead>
+                            <tr class="table-info">
+                                <td>Long</td>
+                                <td>Hoang</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                            </tr>
+
+                            <tr class="table-active">
+                                <td>Lan</td>
+                                <td>Le</td>
+                                <td>lanle@fe.edu.vn</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+
+                            <tr class="table-info">
+                                <td>Huong</td>
+                                <td>Nguyen</td>
+                                <td>huongnguyen@fe.edu.vn</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 text-center">
+                            <button type="button" class="btn btn-primary ">Nhận ca</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="ex-with-icons-tabs-3" role="tabpanel"
+                    aria-labelledby="ex-with-icons-tab-3">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">Từ ngày</div>
+                                <div class="col-sm-12 col-md-9"><input type="date" name="" id="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">Từ ngày</div>
+                                <div class="col-sm-12 col-md-9"><input type="date" name="" id="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-2">
+
+                        <table class="table table-bordered table-sm">
+                            <thead class="table-success text-center">
+                                <tr>
+                                    <th>Ngày</th>
+                                    <th>Nơi làm</th>
+                                    <th>Ca</th>
+                                    <th>Vị Trí</th>
+                                    <th>Đổi ca</th>
+                                </tr>
+                            </thead>
+                            <tr class="table-info">
+                                <td>Long</td>
+                                <td>Hoang</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                            </tr>
+
+                            <tr class="table-active">
+                                <td>Lan</td>
+                                <td>Le</td>
+                                <td>lanle@fe.edu.vn</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+
+                            <tr class="table-info">
+                                <td>Huong</td>
+                                <td>Nguyen</td>
+                                <td>huongnguyen@fe.edu.vn</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="ex-with-icons-tabs-4" role="tabpanel"
+                    aria-labelledby="ex-with-icons-tab-4">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-sm-6">Mã NV:</div>
+                            <div class="col-sm-6">Tên NV:</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Chức danh:</div>
+                            <div class="col-sm-6">Bộ phận:</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Phòng ban:</div>
+                            <div class="col-sm-6">QL trực tiếp:</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <p><strong>1.Đăng ký ngày nghỉ</strong></p>
+                        <div class="row mt-2">
+                            <div class="col-sm-12 col-md-2 ">Thời gian nghỉ:</div>
+                            <div class="col-sm-12 col-md-5 ">
+                                <input type="date" name="" id="" class="form-control">
+                            </div>
+                            <div class="col-sm-12 col-md-5">
+                                <input type="date" name="" id="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-sm-12 col-md-2">Loại:</div>
+                            <div class="col-sm-12 col-md-10">
+                                <select name="" class="form-select " id="">
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                    <option value="">3</option>
+                                    <option value="">4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-sm-12 col-md-2">Loại nghỉ:</div>
+                            <div class="col-sm-12 col-md-10">
+                                <select name="" class="form-select " id="">
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                    <option value="">3</option>
+                                    <option value="">4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-sm-12 col-md-2">Lý do nghỉ:</div>
+                            <div class="col-sm-12 col-md-10">
+                                <input type="text" name="" id="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-sm-9"></div>
+                            <button type="button" class="btn btn-primary col-sm-2">Primary</button>
+                            <div class="col-sm-1"></div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-2">
+                        <p>Danh sách ngày nghỉ</p>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3">Từ ngày:</div>
+                                    <div class="col-sm-12 col-md-9"><input type="date" name="" id=""
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3">Từ ngày:</div>
+                                    <div class="col-sm-12 col-md-9"><input type="date" name="" id=""
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-2">
+
+                        <table class="table table-bordered table-sm">
+                            <thead class="table-success text-center">
+                                <tr>
+                                    <th>Loại nghỉ</th>
+                                    <th>Từ ngày</th>
+                                    <th>Đến ngày</th>
+                                    <th>Loại công</th>
+                                    <th>Số giờ nghỉ</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tr class="table-info">
+                                <td>Long</td>
+                                <td>Hoang</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                                <td>hoanglong@fe.edu.vn</td>
+                            </tr>
+
+                            <tr class="table-active">
+                                <td>Lan</td>
+                                <td>Le</td>
+                                <td>lanle@fe.edu.vn</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+
+                            <tr class="table-info">
+                                <td>Huong</td>
+                                <td>Nguyen</td>
+                                <td>huongnguyen@fe.edu.vn</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="ex-with-icons-tabs-5" role="tabpanel"
+                    aria-labelledby="ex-with-icons-tab-5">
+                    <div class="row">
+                        <p><strong>Duyệt ngày nghỉ</strong></p>
+                        <div class="row mt-2">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3">Từ ngày</div>
+                                    <div class="col-sm-12 col-md-9"><input type="date" name="" id=""
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3">Từ ngày</div>
+                                    <div class="col-sm-12 col-md-9"><input type="date" name="" id=""
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3">Trạng thái</div>
+                                    <div class="col-sm-12 col-md-9">
+                                        <select name="" class="form-select " id="">
+                                            <option value="">1</option>
+                                            <option value="">2</option>
+                                            <option value="">3</option>
+                                            <option value="">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive mt-2">
+
+                            <table class="table table-bordered table-sm">
+                                <thead class="table-success text-center">
+                                    <tr>
+                                        <th>Nhân viên</th>
+                                        <th>Loại nghỉ</th>
+                                        <th>Từ</th>
+                                        <th>Đến</th>
+                                        <th>Số giờ nghỉ</th>
+                                        <th>Số Trạng thái</th>
+                                        <th>Chọn</th>
+                                    </tr>
+                                </thead>
+                                <tr class="table-info">
+                                    <td>Long</td>
+                                    <td>Hoang</td>
+                                    <td>hoanglong@fe.edu.vn</td>
+                                    <td>hoanglong@fe.edu.vn</td>
+                                    <td>hoanglong@fe.edu.vn</td>
+                                    <td>hoanglong@fe.edu.vn</td>
+                                    <td>hoanglong@fe.edu.vn</td>
+                                </tr>
+
+                                <tr class="table-active">
+                                    <td>Lan</td>
+                                    <td>Le</td>
+                                    <td>lanle@fe.edu.vn</td>
+                                    <td>lanle@fe.edu.vn</td>
+                                    <td>lanle@fe.edu.vn</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+
+                                <tr class="table-info">
+                                    <td>Huong</td>
+                                    <td>Nguyen</td>
+                                    <td>huongnguyen@fe.edu.vn</td>
+                                    <td>huongnguyen@fe.edu.vn</td>
+                                    <td>huongnguyen@fe.edu.vn</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="row mt-2">
+                            <button type="button" class="btn btn-primary col-sm-1">Primary</button>
+                            <button type="button" class="btn btn-primary col-sm-1">Primary</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <p><strong>Duyệt In - Out</strong></p>
+                        <div class="row mt-2">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3">Từ ngày</div>
+                                    <div class="col-sm-12 col-md-9"><input type="date" name="" id=""
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3">Từ ngày</div>
+                                    <div class="col-sm-12 col-md-9"><input type="date" name="" id=""
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3">Trạng thái</div>
+                                    <div class="col-sm-12 col-md-9">
+                                        <select name="" class="form-select " id="">
+                                            <option value="">1</option>
+                                            <option value="">2</option>
+                                            <option value="">3</option>
+                                            <option value="">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive mt-2">
+
+                            <table class="table table-bordered table-sm">
+                                <thead class="table-success text-center">
+                                    <tr>
+                                        <th>Nhân viên</th>
+                                        <th>Loại nghỉ</th>
+                                        <th>Từ</th>
+                                        <th>Đến</th>
+                                        <th>Số giờ nghỉ</th>
+                                        <th>Số Trạng thái</th>
+                                        <th>Chọn</th>
+                                    </tr>
+                                </thead>
+                                <tr class="table-info">
+                                    <td>Long</td>
+                                    <td>Hoang</td>
+                                    <td>hoanglong@fe.edu.vn</td>
+                                    <td>hoanglong@fe.edu.vn</td>
+                                    <td>hoanglong@fe.edu.vn</td>
+                                    <td>hoanglong@fe.edu.vn</td>
+                                    <td>hoanglong@fe.edu.vn</td>
+                                </tr>
+
+                                <tr class="table-active">
+                                    <td>Lan</td>
+                                    <td>Le</td>
+                                    <td>lanle@fe.edu.vn</td>
+                                    <td>lanle@fe.edu.vn</td>
+                                    <td>lanle@fe.edu.vn</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+
+                                <tr class="table-info">
+                                    <td>Huong</td>
+                                    <td>Nguyen</td>
+                                    <td>huongnguyen@fe.edu.vn</td>
+                                    <td>huongnguyen@fe.edu.vn</td>
+                                    <td>huongnguyen@fe.edu.vn</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="row mt-2">
+                            <button type="button" class="btn btn-primary col-sm-1">Primary</button>
+                            <button type="button" class="btn btn-primary col-sm-1">Primary</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Tabs content -->
+    </div>
+    </div>
+</body>
+
+</html>

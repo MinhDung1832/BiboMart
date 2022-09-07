@@ -1,0 +1,105 @@
+﻿@using System.Data
+
+    <table id="tbl_Item" class="table table-bordered tb_detail" style="width:99.5%">
+        <thead>
+            <tr>
+                <th class="text-left" style="vertical-align:top;width:3%;">
+                    Mã mảng
+                </th>
+                <th class="text-left" style="vertical-align:top">
+                    Tên mảng
+                </th>
+                <th class="text-left" style="vertical-align:top;">
+                    Mã SIAs
+                </th>
+                <th class="text-left" style="vertical-align:top;">
+                    Tên SIAs
+                </th>
+                <th class="text-left" style="vertical-align:top;">
+                    Thước đo
+                </th>
+                <th class="text-left" style="vertical-align:top">
+                    % Trọng tâm
+                </th>
+                <th class="text-left" style="vertical-align:top;">
+                    KPI - Chi tiêu(Trial)
+                </th>
+                <th class="text-left" style="vertical-align:top;">
+                    % KPI                                       
+                </th>                                           
+                <th class="text-left" style="vertical-align:top;">
+                    Mã hành động                               
+                </th>                                           
+                <th class="text-left" style="vertical-align:top;">
+                    Mã dự án
+                </th>
+                <th class="text-left" style="vertical-align:top;">
+                    Hành động
+                </th>
+                <th class="text-left" style="vertical-align:top;">
+                    Khối
+                </th>
+                <th class="text-left" style="vertical-align:top;">
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody>       
+            @{
+                if (Model != null)
+                {
+                    var dt = Model as DataTable;
+                    if (dt.Rows.Count > 0)
+                    {
+                        var i = 0;
+                        foreach (DataRow item in dt.Rows)
+                        {
+            <tr>
+                <td class="text-right" style="width: 50px; max-width: 50px" title="@item["MaMang"]">
+                    @item["MaMang"]
+                </td>
+                <td class="text-left" style="width: 80px; max-width: 80px" title="@item["TenMang"]">
+                    @item["TenMang"]
+                </td>
+                <td class="text-right" style="width: 50px; max-width: 50px" title="@item["MaSIA"]">
+                    @item["MaSIA"]
+                </td>
+                <td class="text-left" style="width: 120px; max-width: 120px" title="@item["TenSIA"]">
+                    @item["TenSIA"]
+                </td>
+                <td class="text-left" style="width: 70px; max-width: 70px" title="@item["ThuocDo"]">
+                    @item["ThuocDo"]
+                </td>
+                <td class="text-right" style="width: 50px; max-width: 50px" title="@item["TrongTam"]">
+                    @item["TrongTam"]%
+                </td>
+                <td class="text-left" style="width: 50px; max-width: 50px" title="@item["KPIChiTieuTrial"]">
+                    @item["KPIChiTieuTrial"]
+                </td>
+                <td class="text-right" style="width: 50px; max-width: 50px" title="@item["percentKPI"]">
+                    @item["percentKPI"]%
+                </td>
+                <td class="text-right" style="width: 50px; max-width: 50px" title="@item["MaHangDong"]">
+                    @item["MaHangDong"]
+                </td>
+                <td class="text-right" style="width: 50px; max-width: 50px" title="@item["MaDuAn"]">
+                    @item["MaDuAn"]
+                </td>
+                <td class="text-left" style="width: 120px; max-width: 120px" title="@item["ThuocDo"]">
+                    @item["HanhDong"]
+                </td>
+                <td class="text-left" style="width: 100px; max-width: 100px" title="@item["Khoi"]">
+                    @item["Khoi"]
+                </td>
+                <td class="text-left" style="width: 50px; max-width: 50px">
+                    <input type="checkbox" name="cbhd" value="@item["HanhDong"]"/>
+                </td>
+            </tr>
+                            i++;
+
+                        }
+                    }
+                }
+            }
+        </tbody>  
+    </table>

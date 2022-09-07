@@ -1,0 +1,302 @@
+﻿@using ProductAllTool.Models.ManageSales;
+@using ProductAllTool.Common
+@{
+    ViewBag.Title = "Điều chuyển nhân sự";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .logo_img {
+        display: none;
+    }
+
+    .divnew {
+        border: 1px solid #979797;
+        background: linear-gradient(to bottom, white 0%, #dcdcdc 100%);
+        border-radius: 2px;
+        background-color: white;
+        width: 100%;
+    }
+
+    .tdnew {
+        text-align: right;
+    }
+
+    .font1 {
+        color: #4f4f4f;
+        font-size: 12px;
+    }
+
+    .font2 {
+        box-sizing: border-box;
+        display: inline-block;
+        min-width: 1.5em;
+        padding: .5em 1em;
+        margin-left: 2px;
+        text-align: center;
+        text-decoration: none !important;
+        cursor: pointer;
+        color: #f00 !important;
+        font-weight: bold;
+    }
+
+    .transition {
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1);
+    }
+
+    .paginate_button, .ellipsis {
+        display: none !important;
+    }
+
+    .current, #tbl_Item_next, #tbl_Item_previous {
+        display: inline-block !important;
+    }
+
+    #popup_container INPUT[type='button'], #popup_container INPUT[type='button']:focus, .btn-info {
+        background: #5f7e98 !important;
+    }
+
+    .half_col {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .filter-option-inner-inner {
+        font-size: 12px;
+    }
+
+    .btn {
+        border-radius: 0px;
+        padding: 4px 12px;
+    }
+
+    #modalDetails .form-control {
+        height: 30px !important;
+        font-size: 12px !important;
+    }
+
+    .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark {
+        left: 6px !important;
+        right: unset !important;
+    }
+
+    .box_kichthuoc input {
+        margin-bottom: 3px;
+    }
+
+    .title_05 h3 {
+        font-size: 19px;
+        text-transform: uppercase;
+        margin-top: 7px;
+        margin-bottom: 1px;
+    }
+
+    .btn_ver {
+        background-color: #5f7e98 !important;
+        color: #fff;
+        font-size: 12px !important;
+        border: none;
+        font-weight: 600;
+    }
+
+    .modal-footer {
+        padding: 15px 0px !important;
+    }
+
+    input, select, textarea {
+        max-width: 100% !important;
+    }
+
+    .multiselect {
+        width: 181px;
+        line-height: 13px;
+        border-radius: 0px;
+        background-color: #fff;
+    }
+
+    .form-check-inline {
+        display: inline-block;
+    }
+
+    .box_option_thung {
+        margin-top: 9px;
+    }
+
+    #store_popup .btn {
+        background-color: #5f7e98;
+        color: #ffff;
+    }
+
+    #modalDetails .row {
+        margin-bottom: 3px;
+    }
+
+    .row_1 {
+        width: 93%;
+        margin: 0 auto;
+    }
+
+    .bootstrap-select.form-control-sm .dropdown-toggle {
+        padding: 5px !important;
+    }
+
+    #tbl_Item_length {
+        bottom: 0px;
+        position: absolute;
+        display: none;
+    }
+
+    #tbl_Item_paginate {
+        float: right;
+    }
+
+    .dropdown-menu {
+        /*left: 0px !important;*/
+        right: 0px !important;
+        margin-top: 0px;
+    }
+
+    #tbl_Item_info {
+        position: absolute;
+        bottom: 6px;
+    }
+
+    #box_foot td {
+        padding: 0px;
+    }
+
+    #box_foot b {
+        font-size: 12px;
+    }
+
+    table.dataTable tfoot td {
+        padding: 3px 2px 1px 18px !important;
+        border-top: 1px solid #111;
+    }
+
+    #div-content {
+        margin-top: 87px;
+    }
+
+    .box_foot {
+        font-size: 12px;
+    }
+
+    .dropdown-toggle {
+        z-index: unset !important;
+    }
+
+    .btn_ver_m2 {
+        width: 148px !important;
+        background-color: #5f7e98 !important;
+        color: #fff;
+        padding: 5px 5px !important;
+        border: none;
+        font-weight: 600;
+        border-radius: 4px !important;
+    }
+
+</style>
+<style>
+    input[type='date']:after {
+        color: #aaa;
+        content: attr(placeholder);
+    }
+</style>
+<div class="col-md-12 title_05" style="text-align:center">
+    <h3>ĐIỀU CHUYỂN NHÂN SỰ</h3>
+    <label style="color: unset;">Ngày @DateTime.Now.ToString("dd/MM/yyyy")</label>
+    <p style="font-size: 12px;"><span id="txtstore" style="font-weight: normal; text-align: center">@ViewBag.StoreId - @ViewBag.StoreName</span></p>
+</div>
+<hr />
+
+<div class="col-md-12">
+    <div class="col-md-4 col-xs-4 half_col">
+        <label>Từ ngày</label>
+    </div>
+    <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;">
+        <input id="DCNS_frDate" type="date" class="form-control" onchange="js_GetListDCNS()" placeholder="Date" style="width:260px;max-width:100% !important;" />
+    </div>
+</div>
+<br />
+<div class="col-md-12">
+    <div class="col-md-4 col-xs-4 half_col">
+        <label>Đến ngày</label>
+    </div>
+    <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:3px;">
+        <input id="DCNS_toDate" type="date" class="form-control" onchange="js_GetListDCNS()" placeholder="Date" style="width:260px;max-width:100% !important;" />
+    </div>
+</div>
+<br />
+<div class="col-md-12">
+    <div class="col-md-4 col-xs-4 half_col">
+        <label>Nhân viên</label>
+    </div>
+    <div class="col-md-8 col-xs-8 half_col" style="margin-bottom:15px;">
+        <select id="DCNS_uid" class="form-control selectpicker" data-live-search="true" onchange="js_GetListDCNS()">
+            <option value="">--- Nhân viên ---</option>
+            @if (ViewBag.listuid != null)
+            {
+                foreach (objCombox box in (List<objCombox>)ViewBag.listuid)
+                {
+                    <option value="@box.Code">@box.Name</option>
+                }
+            }
+        </select>
+    </div>
+</div>
+<br />
+<div class="col-md-12" id="div-content" style="margin-top:40px">
+    @Html.Partial("~/Views/HRM/Partial/__DieuChuyenNhanSu.cshtml")
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+<script type="text/javascript">
+    $(function () {
+        js_GetListDCNS();
+    });
+
+
+    function js_ReloadTable() {
+        $('#tbl_Item_DCNS')
+            .DataTable({
+                lengthMenu: [[10, 50, 70, 100, -1], [10, 50, 70, 100]],
+                columnDefs: [],
+                autoWidth: false,
+                "searching": false,
+                order: [[0, "desc"]],
+                "pageLength": 10
+            });
+    }
+
+    function js_GetListDCNS() {
+        window.scrollTo(0, 0);
+        var DCNS_frDate = $('#DCNS_frDate').val();
+        var DCNS_toDate = $('#DCNS_toDate').val();
+        var DCNS_uid = $('#DCNS_uid').val();
+
+        $.ajax({
+            url: '/HRM/GetLstDieuChuyenNhanSu',
+            type: 'POST',
+            data: JSON.stringify({ DCNS_frDate: DCNS_frDate, DCNS_toDate: DCNS_toDate, DCNS_uid: DCNS_uid }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+                js_Loading(true, 1);
+            },
+            success: function (data) {
+                $('#div-content').html(data);
+                js_ReloadTable();
+                js_Loading(false, 1);
+            },
+            error: function () {
+                js_Loading(false, 1);
+            }
+        });
+    }
+
+</script>

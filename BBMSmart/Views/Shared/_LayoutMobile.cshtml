@@ -1,0 +1,706 @@
+﻿
+@*<style>
+    .menu_logout {
+        padding: 0px !important;
+        border-bottom: none !important;
+        margin-bottom: 0px !important;
+    }
+
+    .dropdown-menu-media .dropdown-menu-header {
+        padding: 12px 15px;
+        font-size: 13px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .header .dropdown-notification {
+        font-size: 28px;
+    }
+
+    .notiline {
+        font-family: 'SF Pro';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: #212121;
+        text-decoration: none;
+    }
+
+    .notify-signal {
+        height: 6px;
+        width: 6px;
+        position: absolute;
+        top: 3px;
+        right: -3px;
+        background: red;
+        border-radius: 50%;
+    }
+
+    #menuToggle {
+        display: block;
+        position: relative;
+        top: 24px;
+        z-index: 1;
+        -webkit-user-select: none;
+        user-select: none;
+        float: left !important;
+    }
+
+        #menuToggle a {
+            text-decoration: none;
+            color: #232323;
+            transition: color 0.3s ease;
+        }
+
+            #menuToggle a:hover {
+                color: tomato;
+            }
+
+
+        #menuToggle input {
+            display: block;
+            width: 40px;
+            height: 32px;
+            position: absolute;
+            top: -7px;
+            left: -5px;
+            cursor: pointer;
+            opacity: 0; /* hide this */
+            z-index: 2; /* and place it over the hamburger */
+            -webkit-touch-callout: none;
+        }
+
+        #menuToggle span {
+            display: block;
+            width: 19px;
+            height: 2px;
+            margin-bottom: 5px;
+            position: relative;
+            background: #4f4f4f;
+            border-radius: 3px;
+            z-index: 1;
+            transform-origin: 4px 0px;
+            transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0), background 0.5s cubic-bezier(0.77,0.2,0.05,1.0), opacity 0.55s ease;
+        }
+
+            #menuToggle span:first-child {
+                transform-origin: 0% 0%;
+            }
+
+            #menuToggle span:nth-last-child(2) {
+                transform-origin: 0% 100%;
+            }
+
+        #menuToggle input:checked ~ span {
+            opacity: 0.8;
+            transform: rotate(45deg) translate(1px, 3px);
+            background: #232323;
+        }
+
+            #menuToggle input:checked ~ span:nth-last-child(3) {
+                opacity: 0;
+                transform: rotate(0deg) scale(0.2, 0.2);
+            }
+
+            #menuToggle input:checked ~ span:nth-last-child(2) {
+                transform: rotate(-45deg) translate(0, -1px);
+            }
+
+    #menu {
+        position: absolute;
+        width: 300px;
+        margin-top: 16px;
+        left: -14px;
+        padding: 15px 0px 15px 24px;
+        background: #dcdcdc;
+        list-style-type: none;
+        -webkit-font-smoothing: antialiased;
+        border: 1px solid #dcdcdc;
+        /* to stop flickering of text in safari */
+        transform-origin: 0% 0%;
+        z-index: 10000;
+        transform: translate(-100%, 0);
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    }
+
+        #menu li {
+            padding: 5px 0;
+            /*font-size: 22px;*/
+        }
+
+    #menuToggle input:checked ~ ul {
+        transform: none;
+    }
+
+    .box_noti {
+        right: 48px;
+        position: absolute;
+        top: 14px;
+    }
+
+    .box_info {
+        position: absolute;
+        right: 23px;
+        top: 21px;
+    }
+
+        .box_info a {
+            font-size: 18px;
+            color: #4f4f4f;
+        }
+
+    .box_noti a {
+        font-size: 20px;
+        color: #4f4f4f;
+    }
+
+    .wp_hearder {
+        background-color: #f3f3f3 !important;
+        height: 56px;
+        -webkit-transition: background .25s ease;
+        -moz-transition: background .25s ease;
+        -ms-transition: background .25s ease;
+        -webkit-box-shadow: 0 5px 21px -5px #cdd1e1;
+        -moz-box-shadow: 0 5px 21px -5px #cdd1e1;
+        box-shadow: 0 5px 21px -5px #cdd1e1;
+    }
+
+    .dropdown-menu-right {
+        width: 195px;
+    }
+
+    fieldset {
+        display: block;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+        border-width: 1.5px;
+        border-style: solid;
+        border-color: #2d7fbc;
+        border-image: initial;
+    }
+
+    legend {
+        display: block;
+        padding-left: 5px;
+        padding-right: 5px;
+        border-width: initial;
+        border-style: none;
+        border-color: initial;
+        border-image: initial;
+        color: #2d7fbc;
+        font-size: 1.3rem;
+    }
+
+    .menu-display {
+        margin-top: 5px !important;
+        margin-left: -8px !important;
+    }
+
+    .m-menu-arrow {
+        margin-top: 5px !important;
+        margin-left: 1rem !important;
+    }
+
+    .menu-title {
+        display: contents !important;
+        position: absolute;
+        width: 253px;
+        height: 48px;
+        left: 143px;
+        top: 397px;
+        font-family: 'system-ui';
+    }
+
+    #menu .fa-chevron-down {
+        position: absolute;
+        color: #000;
+        left: 340px;
+        right: 0;
+        font-size: 10px;
+    }
+    /*.fa-chevron-down {
+                transform: rotate( 89.92deg );
+            }*/
+
+    .nav > li > a {
+        display: contents;
+        padding: 0px 25px;
+    }
+
+    #menu .collapse {
+        margin-left: -16px;
+    }
+
+    .sub-menu li {
+        padding: 2px 0 !important;
+    }
+
+    #menu .nav-item a {
+        font-weight: 500 !important;
+        color: #0F4C81 !important;
+        font-size: 15px !important;
+    }
+
+    #menu li .sub-menu a {
+        font-weight: 400 !important;
+        color: #4F4F4F !important;
+        font-size: 14px !important;
+    }
+
+    #icondiv {
+        margin-left: 1px;
+        margin-right: 5px;
+        margin-top: 0px;
+        margin-bottom: 5px;
+        width: 20px;
+        height: 20px;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .sub-menu-02, sub-menu-04 {
+        margin-left: 0px !important;
+    }
+
+    .sub-menu-01, sub-menu-03 {
+        color: #4F4F4F !important;
+    }
+
+    .dropdown-menu a {
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .dropdown-menu {
+        margin-top: 22px;
+    }
+
+        .dropdown-menu img {
+            width: 19px;
+            margin: 0px 3px;
+        }
+
+    hr {
+        border-top: 1px solid #cccccc !important;
+        width: 100% !important;
+    }
+
+    .title2 {
+        font-weight: 400
+    }
+
+    .fa_icon {
+        color: #998787;
+        padding: 0 4px 0px 38px
+    }
+
+    .fa_icon0 {
+        padding: 0 9px 0px 19px
+    }
+</style>*@
+<link href="~/Resource/css/site.css" rel="stylesheet" />
+<div class="wp_content ">
+    <div class="wp_hearder " id="lheader">
+        <div class="container_01">
+            <div class="col-md-12">
+
+                <nav class="sidebar sidebar-offcanvas" id="sidebar" role="navigation">
+                    <div id="menuToggle">
+                        <ul id="menu">
+
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="collapse" href="#group-per" aria-expanded="false" aria-controls="group-per">
+                                    <span class="menu-title">Quản lý công việc</span>
+                                </a>
+                                <div class="collapse" id="group-per">
+                                    <a class="nav-link sub-menu-01" data-toggle="collapse" href="#group-kpi" aria-expanded="false" aria-controls="group-kpi">
+                                        <i class="fa fa-caret-right fa_icon0" aria-hidden="true"></i>
+                                        <span class="menu-title title2">Lương thưởng</span>
+                                    </a><br />
+                                    <div class="collapse sub-menu-02" id="group-kpi">
+                                        <ul class="nav flex-column sub-menu">
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Lương thưởng", "WorkOrder", "SalaryBonus")
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Xác nhận công", "ConfirmShift", "SHIFT")
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <a class="nav-link sub-menu-01" data-toggle="collapse" href="#group-sys" aria-expanded="false" aria-controls="group-sys">
+                                        <i class="fa fa-caret-right fa_icon0" aria-hidden="true"></i>
+                                        <span class="menu-title title2">Tài khoản</span>
+                                    </a><br />
+                                    <div class="collapse sub-menu-02" id="group-sys">
+                                        <ul class="nav flex-column sub-menu">
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Mật khẩu", "Picking", "StockTransfer")
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Hỗ trợ (FAQ)", "Picking", "StockTransfer")
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <a class="nav-link sub-menu-01" data-toggle="collapse" href="#group-vh" aria-expanded="false" aria-controls="group-vh">
+                                        <i class="fa fa-caret-right fa_icon0" aria-hidden="true"></i>
+                                        <span class="menu-title title2">Vận hành</span>
+                                    </a><br />
+                                    <div class="collapse sub-menu-02" id="group-vh" style="margin-left:0px">
+                                        <ul class="nav flex-column sub-menu">
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Quản lý vận hành", "DanhGiaCLVH", "QLVH")
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <a class="nav-link sub-menu-01" data-toggle="collapse" href="#group-shift" aria-expanded="false" aria-controls="group-shift">
+                                        <i class="fa fa-caret-right fa_icon0" aria-hidden="true"></i>
+                                        <span class="menu-title title2">Ca làm việc</span>
+                                    </a><br />
+                                    <div class="collapse sub-menu-02" id="group-shift">
+                                        <ul class="nav flex-column sub-menu">
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Lịch làm việc", "RegisterShift", "SHIFT")
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Ca hỗ trợ ngoài định biên", "SupportShiftOutDB", "SHIFT")
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Điều chuyển nhân sự", "DieuChuyenNhanSu", "HRM")
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="collapse" href="#group-cus" aria-expanded="false" aria-controls="group-cus">
+                                    <span class="menu-title">Chăm sóc Khách hàng</span>
+                                </a>
+                                <div class="collapse" id="group-cus">
+                                    <ul class="nav flex-column sub-menu">
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Thông tin Khách hàng", "CustomersChange", "ManageSales")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Tiêu/tích Bixu", "HistoryCoins", "ManageSales")
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="collapse" href="#group-kd" aria-expanded="false" aria-controls="group-kd">
+                                    <span class="menu-title">Quản lý Kinh doanh</span>
+                                </a>
+                                <div class="collapse" id="group-kd">
+                                    <ul class="nav flex-column sub-menu">
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            <a href="https://pos.bibomart.net/">Trợ lý bán hàng</a>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Nghiên cứu thị trường", "Khaosatthitruong", "ManageSales")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Danh sách Thưởng", "ThuongDinhHuong", "KPI")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Xả tồn", "Donggia", "MobileCH")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Hàng tặng hàng", "PushSale", "MobileCH")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Tăng giá/giảm giá", "Tanggiamgia", "MobileCH")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Tích bixu", "Bixu", "MobileCH")
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="collapse" href="#group-hanghoa" aria-expanded="false" aria-controls="group-hanghoa">
+                                    <span class="menu-title">Quản lý Hàng hóa </span>
+                                </a>
+                                <div class="collapse" id="group-hanghoa">
+                                    <a class="nav-link sub-menu-01" data-toggle="collapse" href="#group-dieuchuyen" aria-expanded="false" aria-controls="group-dieuchuyen">
+                                        <i class="fa fa-caret-right fa_icon0" aria-hidden="true"></i>
+                                        <span class="menu-title title2">Điều chuyển</span>
+                                    </a>
+                                    <br />
+                                    <div class="collapse sub-menu-02" id="group-dieuchuyen">
+                                        <ul class="nav flex-column sub-menu">
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Danh sách điều chuyển", "Danhsachdieuchuyen", "StockTransfer")
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Tổng hợp điều chuyển", "GoodsTransfer", "StockTransfer")
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <a class="nav-link sub-menu-01" data-toggle="collapse" href="#group-hh" aria-expanded="false" aria-controls="group-hh">
+                                        <i class="fa fa-caret-right fa_icon0" aria-hidden="true"></i>
+                                        <span class="menu-title title2">Hàng hóa</span>
+                                    </a><br />
+                                    <div class="collapse sub-menu-02" id="group-hh" style="margin-left:0px">
+                                        <ul class="nav flex-column sub-menu">
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Chỉ định hàng mới", "Chidinhhangmoi", "QLHH")
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Khai báo lỗi hỏng", "DeclareStatusGoods", "Goods")
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                                @Html.ActionLink("Nhận hàng", "ReceiveTOSO", "Goods")
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="collapse" href="#group-report" aria-expanded="false" aria-controls="group-report">
+                                    <span class="menu-title">Quản lý trải nghiệm</span>
+                                </a>
+                                <div class="collapse" id="group-report">
+                                    <ul class="nav flex-column sub-menu">
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Hạ tầng", "WorkOrder", "Maintenance")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Trưng bày", "QuanLyTrungBay", "QLVH")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Quản lý vận hành", "QuanLyVanHanhCH", "QLVH")
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="collapse" href="#group-reports" aria-expanded="false" aria-controls="group-reports">
+                                    <span class="menu-title">Báo cáo</span>
+                                </a>
+                                <div class="collapse" id="group-reports">
+                                    <ul class="nav flex-column sub-menu">
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Báo cáo điều chuyển", "TrackingTransfer", "StockTransfer")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Báo cáo Push Sales", "BusinessBrand", "Report")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Báo cáo vận hành", "ReportDanhGiaCLVH", "QLVH")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Báo cáo dịch vụ", "ReportDanhGiaCLDV", "QLVH")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Đánh giá chất lượng dịch vụ", "DanhGiaChatLuongDV", "QLVH")
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-caret-right fa_icon" aria-hidden="true"></i>
+                                            @Html.ActionLink("Đánh giá chất lượng vận hàng", "DanhGiaCLVH", "QLVH")
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <div class="logo_img col-md-3">
+                    <a href="/"><img style="width: 55%;  margin-top: 8px;  margin-left: 20%;" src="~/image/bibologo.png" /></a>
+                </div>
+                <div class="box_noti">
+
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        <i class="rel">
+                            <img src="~/Resource/icon/Notification FILL.png" style="width:25px; height:25px" />
+                            <span class="notify-signal" id="notifysignal" style="display:none"></span>
+                        </i>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right dropdown-menu-media" style="    width: 295px;
+    left: -280px !important;
+    top: 43px;">
+                        <li class="dropdown-menu-header">
+                            <div style="font-family: Rift-Bold;
+                                            font-style: normal;
+                                            font-weight: 700;
+                                            font-size: 20px;
+                                            line-height: 32px;
+                                            color: #212121;">
+                                <span><strong></strong> Thông báo</span>
+                            </div>
+                        </li>
+                        <li class="list-group list-group-divider scroller" data-height="240px" data-color="#71808f">
+                            <ul id="menuNoti2">
+                                <div id="notiarea2">
+                                    Không có thông báo khả dụng
+                                </div>
+                            </ul>
+
+                        </li>
+                        <div class="menu_logout" style="border-top: 1px solid #ddd;">
+
+                            <a href="/Notification/ManageNotiNV" style="color: #272727; display: inline; font-weight: bold; float:right;margin-bottom: 0px;">Xem lịch sử thông báo</a>
+
+                        </div>
+                    </ul>
+                </div>
+                <div class="box_info nav-profile dropdown m-m-profile">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="profile_dropdown">
+                        <img src="~/Image/info.png" style="width: 19px;float: right" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profile_dropdown" style="top: 36px;left: -175px !important;">
+                        <a class="dropdown-item">
+                            <img src="https://img.icons8.com/fluency-systems-regular/48/000000/user.png" />
+                            @Session["uid"]
+                        </a>
+                        <hr class="m-t-0 m-b-0" />
+                        <a class="dropdown-item" href="#" target="_blank">
+                            <img src="https://img.icons8.com/material-outlined/24/000000/book.png" />
+                            Hướng dẫn sử dụng
+                        </a>
+                        <hr class="m-t-0 m-b-0" />
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Account")">
+                            <img src="https://img.icons8.com/fluency-systems-regular/48/000000/logout-rounded.png" />
+                            Đăng xuất
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-8" style="padding-left: 0px; padding-right: 0px; margin-top: 10px;">
+                    <h3 id="txtHead"></h3>
+                    <div class="text_date" style="width:100%; text-align:center; display:none">Ngày: @DateTime.Now.ToString("dd/MM/yyyy")</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Detail_modal666" tabindex="-1" role="dialog" aria-labelledby="shift_detail_modal_label" aria-hidden="true" style="--bs-modal-width: 800px;">
+    <div class="modal-dialog" role="document" style="width:96%; border-radius:0; ">
+        <div class="modal-content" style="border-radius:0;">
+            <div class="modal-header" style="background:#c4c4c4; color:#4f4f4f;padding: 7px;">
+                <h5 class="modal-title" id="shift_detail_modal_label" style=" font-size:18px;display: contents;">Nội dung</h5>
+                <button type="button" class="close" onclick="js_close();" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div style="width:100%; padding:15px; overflow:hidden" id="detailmodal">
+            </div>
+            <div style="padding:10px">
+
+                <div style="text-align: center;">
+                    <a onclick="js_read();" class="form-control btn btn-info" style="width:88px; margin-top:10px;">
+                        <i class="fas fa-eye" aria-hidden="true" style="float:left; margin-left: 6px;margin-top: 3px;"></i>Đã đọc
+                    </a>
+                    <a onclick="js_close();" class="form-control btn btn-info" style="width:88px; margin-top:10px;">
+                        <i class="fas fa-times" aria-hidden="true" style="float:left; margin-left: 6px;margin-top: 3px;"></i>Đóng
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+
+    $('a.nav-link.sub-menu-01').click(function () {
+        $("i", this).toggleClass("fa fa-caret-down fa fa-caret-right");
+    });
+
+    $(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Notification/GetNotiNV",
+            data: JSON.stringify({}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r.length > 0) {
+                    $('#notiarea2').empty();
+                    lstnoti = r;
+                    var str = '';
+                    $.each(r, (index, value) => {
+                        var tr = '<li> <a class="notiline" onclick="js_detailmodal(' + index + ')" >'
+                            + value.Title + '</a> </li> ';
+                        str += tr;
+                    });
+                    $("#notiarea2").append(str);
+                    $('#notifysignal').show();
+                    js_detailmodal('0');
+                }
+            }
+        });
+    });
+
+    var currentID = 0;
+    var lstnoti;
+
+    function js_detailmodal(index) {
+        currentID = lstnoti[index].ID;
+        $('#detailmodal').html(lstnoti[index].Detail);
+        $('#Detail_modal666').modal('show');
+    }
+
+    function js_close() {
+        $('#Detail_modal666').modal('hide');
+    }
+
+    function js_read() {
+        var NotiID = currentID;
+        $.ajax({
+            url: '/Notification/ReadNoti',
+            type: 'POST',
+            data: JSON.stringify({ NotiID: NotiID }),
+            contentType: 'application/json, charset=utf-8',
+            beforeSend: function () {
+            },
+            success: function (data) {
+                if (data.result == "1") {
+                    location.reload(true);
+                } else {
+                    jAlert("Có lỗi xảy ra." + data.result);
+                }
+            },
+            error: function (err) {
+            }
+        });
+    }
+
+</script>

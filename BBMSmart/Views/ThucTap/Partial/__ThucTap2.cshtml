@@ -1,0 +1,178 @@
+﻿@using System.Data
+@using ProductAllTool.Models.ManageSales;
+@{
+    var lsthd = (List<objCombox>)Session["listhanhdongdc"];
+    var listLoaidc = (List<objCombox>)Session["listLoaidc"];
+}
+<link href="~/Resource/Content/css/thickbox.css" rel="stylesheet" />
+<script src="~/Resource/Scripts/thickbox.js"></script>
+<table id="tbl_Item" class="table table-bordered" style="width:99.9%">
+    <thead>
+        <tr>
+            <th class="text-left" style="vertical-align: top">
+                Kho chia
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                Vendor
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                CH TSF
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                Miền
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                Tỉnh
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                Mã CH
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                Tên CH
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                Mã <br />hàng
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                Tên hàng
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                PS <br /> ERP
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                DS <br />ERP
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                Min <br /> PSF
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                SL <br /> tồn
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                SL bán <br /> D30
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                Stockday
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                SL gợi <br /> ý
+            </th>
+            <th class="text-left" style="vertical-align: top;">
+                SL đề <br /> xuất
+            </th>
+            <th class="text-left" style="vertical-align: top">
+                Ngày cập <br /> nhật
+            </th>
+            <th class="text-center" style="vertical-align: top;text-align:center !important">
+                Chọn <br />
+                <input type="checkbox" id="checkall" class="text-center" onchange="checkall()" />
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            if (Model != null)
+            {
+                var dt = Model as DataTable;
+                if (dt.Rows.Count > 0)
+                {
+                    var i = 0;
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        <tr id="row_@i">
+                            <td class="text-left" style="width:120px; max-width: 120px;  overflow: hidden;white-space: nowrap" title="@item["KhoChia"]">
+                                @item["KhoChia"]
+                                <input id="kccode_@i" type="hidden" value="@item["KhoChiaCode"]" />
+                                <input id="kcname_@i" type="hidden" value="@item["KhoChiaName"]" />
+                                <input id="vdcode_@i" type="hidden" value="@item["Vendor_Code"]" />
+                                <input id="vdname_@i" type="hidden" value="@item["Vendor_Name"]" />
+                                <input id="brand_@i" type="hidden" value="@item["Brand"]" />
+                                <input id="rntop_@i" type="hidden" value="@item["RN"]" />
+                            </td>
+                            <td class="text-left" style="width: 170px; max-width: 170px;  overflow: hidden;white-space: nowrap" title="@item["Vendor"]">
+                                @item["Vendor"]
+                            </td>
+                            <td class="text-right" style="width: 40px;">
+                                <span id="tsf_@i">@item["TSF"]</span>
+                            </td>
+                            <td class="text-left" style="width: 40px; max-width: 40px;  overflow: hidden;white-space: nowrap">
+                                <span id="mien_@i">@item["Mien"]</span>
+                            </td>
+                            <td class="text-left" style="width: 40px;max-width: 40px">
+                                <span id="tinh_@i">@item["MaTinhCode"]</span>
+                            </td>
+                            <td class="text-left" style="width: 40px;max-width: 40px">
+                                <span id="mch_@i">@item["MaCH"]</span>
+                            </td>
+                            <td class="text-left" style="width: 120px;max-width: 120px;  overflow: hidden;white-space: nowrap">
+                                <span id="tch_@i">@item["TenCH"]</span>
+                            </td>
+                            <td class="text-left" style="width: 40px;max-width: 40px">
+                                <span id="mh_@i">@item["MaHang"]</span>
+                            </td>
+                            <td class="text-left" style="width: 150px;max-width: 150px; overflow: hidden;white-space: nowrap" title="@item["TenHang"]">
+                                <span id="th_@i">@item["TenHang"]</span>
+                            </td>
+                            <td class="text-right" style="width: 50px;max-width: 50px">
+                                <span id="pserp_@i">@item["PS_ERP"]</span>
+                            </td>
+                            <td class="text-right" style="width: 50px;max-width: 50px">
+                                <span id="dserp_@i" style="color:@item["colorDS"]">@item["DailySalesErp"]</span>
+                            </td>
+                            <td class="text-right" style="width: 50px;max-width: 50px">
+                                <span id="min_@i">@item["MinPSFunction"]</span>
+                            </td>
+                            <td class="text-right" style="width: 50px;max-width: 50px">
+                                <span id="slt_@i">@item["SlTon"]</span>
+                            </td>
+                            <td class="text-right" style="width: 50px;max-width: 50px">
+                                <span id="slb_@i">@item["SLD30"]</span>
+                            </td>
+                            <td class="text-right" style="width: 40px;max-width: 40px">
+                                <span id="std_@i">@item["StockDay"]</span>
+                            </td>
+                            <td class="text-left" style="width: 40px;max-width: 40px">
+                                <span id="slgy_@i">@item["SLGoiY"]</span>
+                            </td>
+                            <td class="text-right" style="width: 40px;max-width:40px">
+                                <input id="sldx_@i" type="text" class="form-control text-right" value="@item["SLGoiY"]" />
+                            </td>
+                            <td class="text-left" style="width: 70px;max-width: 70px">
+                                @item["NgayDuyetChia"]
+                            </td>
+                            <td class="text-center" style="width: 35px;max-width: 35px">
+                                <input id="_@i" class="text-center" name="check[]" type="checkbox" value="@item["MaHang"]" />
+                            </td>
+
+
+                        </tr>
+                        i++;
+                    }
+                }
+            }
+        }
+    </tbody>
+    <tfoot>
+    </tfoot>
+</table>
+<script>
+
+    function checkall() {
+        var cboxes = document.getElementsByName('check[]');
+        for (var i = 0; i < cboxes.length; i++) {
+            if ($('#checkall').is(":checked")) {
+                cboxes[i].checked = true;
+            }
+            else {
+                cboxes[i].checked = false;
+            }
+        }
+    }
+
+    function currencyFormat(num) {
+        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+</script>
+
+

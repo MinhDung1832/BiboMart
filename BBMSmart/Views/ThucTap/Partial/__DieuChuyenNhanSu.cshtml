@@ -1,0 +1,80 @@
+﻿@using System.Data
+<link href="~/Content/css/thickbox.css" rel="stylesheet" />
+<script src="~/Scripts/thickbox.js"></script>
+<table id="tbl_Item_DCNS" class="table table-bordered tb_detail" style="border:none !important">
+    <thead>
+        <tr>
+            <th>
+                CH chuyển
+            </th>
+            <th>
+                CH nhận
+            </th>
+            <th>
+                Nhân viên
+            </th>
+            <th>
+                Ngày điều chuyển
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model != null)
+            {
+                var dt = Model as DataTable;
+                if (dt.Rows.Count > 0)
+                {
+                    var i = 0;
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        <tr id="row_@i">
+                            <td class="text-left">
+                                @item["CHdc"]
+                            </td>
+                            <td class="text-left">
+                                @item["CHnhan"]
+                            </td>
+                            <td class="text-left">
+                                @item["NhanVien"]
+                            </td>
+                            <td class="text-left">
+                                @item["NgayDieuChuyen"]
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>
+<style>
+    #tbl_Item_DCNS_paginate {
+        float: right;
+        display: block;
+        padding-top: 13px;
+    }
+
+    #tbl_Item_DCNS_info {
+        bottom: 7px;
+        float: left;
+        position: absolute;
+    }
+
+    #tbl_Item_DCNS_length {
+        bottom: 0px;
+        position: absolute;
+        display: none;
+    }
+
+    .paginate_button, .ellipsis {
+        display: none !important;
+    }
+
+    .current, #tbl_Item_DCNS_next, #tbl_Item_DCNS_previous {
+        display: inline-block !important;
+    }
+</style>
+
